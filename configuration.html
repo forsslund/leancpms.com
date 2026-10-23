@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Configuration — LeanCPMS</title>
+  <meta name="description" content="How an operator is configured in LeanCPMS: three YAML files for the organization, the price list and each site, changed with plan and apply from the cpms command line.">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#fbfbf9" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#111514" media="(prefers-color-scheme: dark)">
+  <link rel="canonical" href="https://leancpms.com/configuration.html">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Configuration — LeanCPMS">
+  <meta property="og:description" content="An operator's whole setup is three YAML files: organization, price list and one per site. Plan shows the change, apply makes it.">
+  <meta property="og:url" content="https://leancpms.com/configuration.html">
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="/"><img src="favicon.svg" alt="" width="26" height="26">LeanCPMS</a>
+      <nav class="site-nav" aria-label="Main">
+        <a href="/#features">Features</a>
+        <a href="configuration.html" aria-current="page">Configuration</a>
+        <a href="/#open-source">Open source</a>
+        <a href="/#cloud">Cloud</a>
+        <a href="/#contact">Contact</a>
+        <a href="https://portal.leancpms.com/portal/">Log in</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="page-head">
+      <div class="wrap">
+        <p class="eyebrow">Configuration as code</p>
+        <h1>Three YAML files describe an operator.</h1>
+        <p class="lede">An operator's whole setup is three kinds of YAML file, kept in its own repository. Everything else, such as sessions, receipts and statements, the system derives from them.</p>
+
+        <div class="grid">
+          <a class="card link-card" href="#organization">
+            <h3>Organization</h3>
+            <p>Who is on the receipt, and how drivers pay.</p>
+          </a>
+          <a class="card link-card" href="#pricelist">
+            <h3>Price list</h3>
+            <p>Tariffs with dated price rows, plans and channels.</p>
+          </a>
+          <a class="card link-card" href="#site">
+            <h3>One site per station</h3>
+            <p>Fuse groups with their budget, charge points with phase rotation, and outlets.</p>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section id="organization" class="alt">
+      <div class="wrap">
+        <h2>The organization</h2>
+        <p class="section-intro">Who the operator is: the name, numbers and address on every receipt, and how drivers pay.</p>
+        <figure class="file">
+          <figcaption>organization.yaml</figcaption>
+          <pre><code><span class="k">manifest</span>: cpms/v1
+<span class="k">kind</span>: organization
+<span class="k">organization</span>:
+  <span class="k">key</span>: example
+  <span class="k">name</span>: Example Charging AB
+  <span class="k">org_number</span>: <span class="s">"000000-0000"</span>
+  <span class="k">vat_number</span>: SE000000000001
+  <span class="k">address</span>: <span class="s">"Exempelgatan 1, 123 45 Exempelstad"</span>
+  <span class="k">email</span>: info@example.com
+  <span class="k">payment_mode</span>: direct            <span class="c"># drivers pay into your own Stripe account</span>
+  <span class="k">currency</span>: SEK
+  <span class="k">display_timezone</span>: Europe/Stockholm
+  <span class="k">operator_id</span>: <span class="s">"SE*EXA"</span>           <span class="c"># eMI3: your OCPI party and the prefix of every EVSE id</span></code></pre>
+        </figure>
+        <ul class="points">
+          <li><code>key</code> is the stable name that the other documents use. Every object has one, so renaming something never breaks a reference.</li>
+          <li><code>payment_mode: direct</code> means that drivers pay into the operator's own Stripe account, so the operator is the seller.</li>
+          <li><code>operator_id</code> is needed once a site is published over OCPI; every EVSE id is derived from it.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="pricelist">
+      <div class="wrap">
+        <h2>The price list</h2>
+        <p class="section-intro">One for the whole organization. A tariff is the price per kWh, a plan is the offer, and a channel says which plan a driver gets.</p>
+        <figure class="file">
+          <figcaption>pricelist.yaml</figcaption>
+          <pre><code><span class="k">manifest</span>: cpms/v1
+<span class="k">kind</span>: pricelist
+<span class="k">organization</span>: example
+
+<span class="k">tariffs</span>:
+  - <span class="k">key</span>: standard
+    <span class="k">name</span>: Standard
+    <span class="k">kind</span>: flat
+    <span class="k">amounts</span>: incl_vat             <span class="c"># the price incl. VAT is exact</span>
+    <span class="k">vat_rate</span>: <span class="s">"0.25"</span>
+    <span class="k">prices</span>:                       <span class="c"># dated rows, oldest first</span>
+      - {<span class="k">from</span>: 2026-01-01, <span class="k">per_kwh</span>: <span class="s">"4.50"</span>}
+      - {<span class="k">from</span>: 2026-12-01, <span class="k">per_kwh</span>: <span class="s">"4.70"</span>}
+
+<span class="k">plans</span>:
+  - <span class="k">key</span>: dropin
+    <span class="k">name</span>: Drop-in
+    <span class="k">tariff</span>: standard
+    <span class="k">requires</span>: none                <span class="c"># anyone who scans the QR code</span>
+    <span class="k">preauth_amount</span>: <span class="s">"300"</span>         <span class="c"># reserved on the card, incl. VAT</span>
+  - <span class="k">key</span>: roaming
+    <span class="k">tariff</span>: standard              <span class="c"># roaming drivers pay the same per kWh</span>
+    <span class="k">requires</span>: roaming
+
+<span class="k">channels</span>:
+  <span class="k">adhoc</span>: [dropin]                 <span class="c"># what a driver without an account gets</span>
+  <span class="k">roaming</span>: {<span class="k">default</span>: roaming}     <span class="c"># drivers from roaming partners</span></code></pre>
+        </figure>
+        <ul class="points">
+          <li><code>amounts: incl_vat</code> says which side of the price is exact. The other side is calculated, so 4.70 incl. VAT stays 4.70 on the receipt.</li>
+          <li>Prices are dated rows. A price change is a new row with its date, and a row that has taken effect cannot be edited, so old receipts stay explainable.</li>
+          <li>Drop-in and roaming share one tariff, so they pay the same and a price change is one line.</li>
+          <li>Amounts are quoted strings, never floats. A float is not money.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="site" class="alt">
+      <div class="wrap">
+        <h2>A site</h2>
+        <p class="section-intro">One file per station, with what the installer knows and nothing commercial: a site never names a price.</p>
+        <figure class="file">
+          <figcaption>exempelgatan.yaml</figcaption>
+          <pre><code><span class="k">manifest</span>: cpms/v1
+<span class="k">kind</span>: site
+<span class="k">organization</span>: example
+<span class="k">site</span>:
+  <span class="k">key</span>: exempelgatan
+  <span class="k">name</span>: Exempelgatan 12
+  <span class="k">address</span>: Exempelgatan 12
+  <span class="k">city</span>: Exempelstad
+  <span class="k">postal_code</span>: <span class="s">"123 45"</span>
+  <span class="k">coordinates</span>: {<span class="k">latitude</span>: <span class="s">"59.0000000"</span>, <span class="k">longitude</span>: <span class="s">"18.0000000"</span>}
+  <span class="k">publish</span>: true                   <span class="c"># listed in OCPI, e.g. Nobil</span>
+  <span class="k">fuse_groups</span>:
+    - <span class="k">key</span>: main
+      <span class="k">name</span>: Main fuse
+      <span class="k">physical_fuse_amps</span>: 63
+      <span class="k">budget_amps</span>: 50             <span class="c"># the balancer stays within this</span>
+      <span class="k">charge_points</span>:
+        - <span class="k">key</span>: cp1
+          <span class="k">ocpp_id</span>: SIM-0001
+          <span class="k">phase_rotation</span>: [L1, L2, L3]
+          <span class="k">outlets</span>:
+            - {<span class="k">connector</span>: 1, <span class="k">key</span>: cp1-1, <span class="k">plug</span>: type2_socket, <span class="k">phases</span>: 3, <span class="k">max_amps</span>: 32}
+            - {<span class="k">connector</span>: 2, <span class="k">key</span>: cp1-2, <span class="k">plug</span>: type2_socket, <span class="k">phases</span>: 3, <span class="k">max_amps</span>: 32}
+        - <span class="k">key</span>: cp2
+          <span class="k">ocpp_id</span>: SIM-0002
+          <span class="k">phase_rotation</span>: [L2, L3, L1]   <span class="c"># wired one phase over</span>
+          <span class="k">outlets</span>:
+            - {<span class="k">connector</span>: 1, <span class="k">key</span>: cp2-1, <span class="k">plug</span>: type2_socket, <span class="k">phases</span>: 3, <span class="k">max_amps</span>: 32}
+            - {<span class="k">connector</span>: 2, <span class="k">key</span>: cp2-2, <span class="k">public</span>: false}   <span class="c"># not offered to drivers</span>
+        - <span class="k">key</span>: cp3
+          <span class="k">ocpp_id</span>: SIM-0003
+          <span class="k">phase_rotation</span>: [L3, L1, L2]
+          <span class="k">outlets</span>:
+            - {<span class="k">connector</span>: 1, <span class="k">key</span>: cp3-1, <span class="k">plug</span>: type2_cable, <span class="k">phases</span>: 3, <span class="k">max_amps</span>: 16}</code></pre>
+        </figure>
+        <ul class="points">
+          <li><code>budget_amps</code> is what the load balancer may use. It can be set below <code>physical_fuse_amps</code>, for example for a smaller grid subscription, but never above it.</li>
+          <li><code>phase_rotation</code> is set per charge point. Boxes are often wired with the phases rotated so that single-phase cars spread over L1–L3, and the balancer needs to know which station phase each box draws from.</li>
+          <li><code>publish: true</code> lists the site over OCPI, for example in Nobil. A published site must then give its address, coordinates and, for each public outlet, <code>plug</code>, <code>phases</code> and <code>max_amps</code>.</li>
+          <li>An outlet with <code>public: false</code> is not offered to drivers. The files contain no secrets: charge point keys are generated by the server.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="plan-apply">
+      <div class="wrap">
+        <h2>How a change goes live</h2>
+        <p class="section-intro">The same two commands work for all three kinds of file, as with infrastructure-as-code.</p>
+
+        <div class="split">
+          <ul class="points">
+            <li><code>cpms manifest plan site.yaml</code> shows what would change and any warnings, such as sessions that are running now. It checks the file against the organization's other documents: a budget above the fuse, a plan naming a missing tariff, or an edited price row is an error.</li>
+            <li><code>cpms manifest apply</code> applies exactly what was planned, with a message saying why. If the document changed on the server since the plan, it refuses, and you plan again.</li>
+            <li>Nothing is removed unless you pass <code class="nb">--prune</code>.</li>
+            <li>Every applied version is kept with its message and author: <code>cpms manifest history</code> lists them.</li>
+          </ul>
+          <div class="prose">
+            <p>The command line is on PyPI as <a href="https://pypi.org/project/leancpms-cli/">leancpms-cli</a>:</p>
+            <pre class="terminal">uv tool install leancpms-cli    # or: pipx install leancpms-cli
+cpms login --url https://cpms.example.com</pre>
+            <p><code>cpms login</code> opens your browser, where you log in to the portal and approve the key.</p>
+            <p>There is a JSON Schema for the files, so editors can validate and autocomplete them as you type. It comes with the command line: <code>cpms manifest schema</code>. <code>cpms manifest validate</code> checks a file offline.</p>
+          </div>
+        </div>
+
+        <figure class="file run">
+          <figcaption>An example, shortened: raising the budget and adding a charge point</figcaption>
+          <pre class="terminal">$ cpms manifest plan exempelgatan.yaml
+example site exempelgatan: version 3
+  ~ site.fuse_groups[main].budget_amps: 50 → 63
+  + site.fuse_groups[main].charge_points[cp4]
+  ! fuse group exempelgatan/main has 2 active sessions; new budget applies next cycle
+  priced by price list version 2: 6 public outlets → plan dropin, 4.50 SEK/kWh incl. VAT
+
+$ cpms manifest apply exempelgatan.yaml -m "New grid subscription, one more box"
+  …
+apply? [y/N] y
+applied example site exempelgatan version 4
+
+$ cpms manifest history example --site exempelgatan
+VERSION  APPLIED (UTC)        AUTHOR            MESSAGE
+v1       2026-03-02 08:41:10  key:lcp_4f2a:cli  First three boxes
+v2       2026-05-19 13:05:47  key:lcp_4f2a:cli  cp2 is wired L2-L3-L1
+v3       2026-08-11 10:22:03  key:lcp_4f2a:cli  Outlet cp2-2 reserved for the property
+v4       2026-11-02 09:14:31  key:lcp_4f2a:cli  New grid subscription, one more box</pre>
+        </figure>
+      </div>
+    </section>
+
+    <section id="your-repository" class="alt">
+      <div class="wrap">
+        <h2>Your files, your repository</h2>
+        <p class="section-intro">It works the same whether you self-host or use LeanCPMS Cloud. Keep the files in your own git repository, review changes as pull requests, or let an AI agent propose them.</p>
+        <div class="actions">
+          <a class="button primary" href="mailto:jonas@forsslundsystems.com?subject=LeanCPMS%20configuration">Contact us</a>
+          <a class="button secondary" href="/">Back to the home page</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>© 2026 Forsslund Systems AB · LeanCPMS is open source under AGPL-3.0 · <a href="https://portal.leancpms.com/portal/">Log in</a></p>
+    </div>
+  </footer>
+</body>
+</html>

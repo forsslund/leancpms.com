@@ -3,12 +3,13 @@
 The website for LeanCPMS, the open-source charge point management system,
 and LeanCPMS Cloud, the hosted service from Forsslund Systems AB.
 
-It is a single static page: no build step, no framework, no JavaScript, no
+It is a few static pages: no build step, no framework, no JavaScript, no
 trackers and no cookies.
 
 | File | What |
 |---|---|
-| `index.html` | the page |
+| `index.html` | the home page |
+| `configuration.html` | the YAML configuration, with example files |
 | `style.css` | all styles; light and dark mode follow `prefers-color-scheme` |
 | `favicon.svg` | the icon |
 | `404.html` | shown by GitHub Pages for unknown paths |
@@ -22,6 +23,11 @@ Edit the HTML or CSS directly. To preview locally:
 python3 -m http.server 8000
 # open http://localhost:8000/
 ```
+
+The example YAML files on `configuration.html` are coloured by hand with
+`<span class="k|s|c">` (key, string, comment). They must stay valid
+manifests: after changing one, copy it out and run `cpms manifest validate`
+on it.
 
 ## Publishing
 
