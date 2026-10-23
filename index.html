@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LeanCPMS — open-source charge point management</title>
+  <meta name="description" content="LeanCPMS is an open-source charge point management system (CPMS) for EV charging: load balancing, card payment by QR code and clear monthly reports. Hosted as LeanCPMS Cloud by Forsslund Systems AB.">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#fbfbf9" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#111514" media="(prefers-color-scheme: dark)">
+  <link rel="canonical" href="https://leancpms.com/">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="LeanCPMS — open-source charge point management">
+  <meta property="og:description" content="Small, complete and debuggable CPMS for EV charging: load balancing, card payment by QR code and clear monthly reports.">
+  <meta property="og:url" content="https://leancpms.com/">
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="/"><img src="favicon.svg" alt="" width="26" height="26">LeanCPMS</a>
+      <nav class="site-nav" aria-label="Main">
+        <a href="#features">Features</a>
+        <a href="#open-source">Open source</a>
+        <a href="#cloud">Cloud</a>
+        <a href="#contact">Contact</a>
+        <a href="https://portal.leancpms.com/portal/">Log in</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero">
+      <div class="wrap">
+        <p class="eyebrow">Charge point management for EV charging</p>
+        <h1>LeanCPMS: an open-source CPMS that is small, complete and debuggable.</h1>
+        <p class="lede">Run public or housing-association chargers with load balancing, card payment by QR code and clear monthly reports.</p>
+        <div class="actions">
+          <a class="button primary" href="mailto:jonas@forsslundsystems.com">Contact us</a>
+          <a class="button secondary" href="https://portal.leancpms.com/portal/">Log in</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="features" class="alt">
+      <div class="wrap">
+        <h2>What it does</h2>
+        <p class="section-intro">Everything a site with a handful of chargers needs, and nothing it doesn't. You should be able to see what the system did, and why.</p>
+
+        <div class="grid">
+          <article class="card">
+            <h3>Load balancing</h3>
+            <p>Per fuse group and per station phase. It reads the station meter, so other load on the same fuse is counted. If the balancer stops, chargers fall back to a safe default limit.</p>
+          </article>
+          <article class="card">
+            <h3>Drop-in charging</h3>
+            <p>A QR code on each outlet leads to the price incl. VAT, card payment and a receipt. Drivers need no app and no account.</p>
+          </article>
+          <article class="card">
+            <h3>Your Stripe account is the seller</h3>
+            <p>Payments go to the operator's own Stripe account. Money never passes through the platform.</p>
+          </article>
+          <article class="card">
+            <h3>Monthly statements</h3>
+            <p>Per site and per charge point: energy delivered, and money incl. and excl. VAT.</p>
+          </article>
+          <article class="card">
+            <h3>Open protocols</h3>
+            <p>Chargers connect over OCPP 1.6J. OCPI 2.2.1 publishes your locations to services such as Nobil.</p>
+          </article>
+          <article class="card">
+            <h3>Configuration as code</h3>
+            <p>Organization, price list and sites are versioned YAML documents. <code>plan</code> shows the change, <code>apply</code> makes it, as with infrastructure-as-code.</p>
+          </article>
+          <article class="card">
+            <h3>API and CLI</h3>
+            <p>A JSON API with OpenAPI docs, and the <code>cpms</code> command line with browser login. Install it from PyPI as <a href="https://pypi.org/project/leancpms-cli/"><code>leancpms-cli</code></a>.</p>
+          </article>
+          <article class="card">
+            <h3>Operator portal</h3>
+            <p>Overview, sessions, receipts and reports. Log in with a one-time code by e-mail; there are no passwords.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="open-source">
+      <div class="wrap split">
+        <div class="prose">
+          <h2>Open source</h2>
+          <p>LeanCPMS is licensed under the AGPL-3.0-or-later. Anyone can run it themselves, read exactly what it does, and contribute.</p>
+        </div>
+        <div class="prose">
+          <p>The source code will be published on GitHub with the first release. Until then, <a href="mailto:jonas@forsslundsystems.com?subject=LeanCPMS%20early%20access">contact us for early access</a>.</p>
+          <p>The command-line client is already available: <a href="https://pypi.org/project/leancpms-cli/">leancpms-cli on PyPI</a>.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="cloud" class="alt">
+      <div class="wrap">
+        <h2>LeanCPMS Cloud</h2>
+        <p class="section-intro">The hosted service from Forsslund Systems AB, for public charge point operators and housing associations.</p>
+
+        <div class="split">
+          <ul class="checklist">
+            <li><strong>We run it.</strong> We update, back up and monitor the system, so you don't have to.</li>
+            <li><strong>Your brand.</strong> Your own branding and your own driver domain, such as charge.yourcompany.com, or a page under leancpms.com.</li>
+            <li><strong>Your Stripe account.</strong> You are the seller on the receipt and payouts go straight to you. Our fee is a separate invoice.</li>
+          </ul>
+          <ul class="checklist">
+            <li><strong>No lock-in.</strong> Your configuration lives in your own repository as YAML. Manage it with the CLI, the API or AI agents. Because LeanCPMS is open source, you can always move to self-hosting.</li>
+            <li><strong>Help getting started.</strong> We help you onboard your chargers and set up your price lists.</li>
+            <li><strong>Housing associations.</strong> If you don't take card payments, you can get a monthly file for your accountant.</li>
+          </ul>
+        </div>
+
+        <div class="note">
+          <p>LeanCPMS Cloud runs today for Kvartersel, a public charge point operator in Stockholm: <em>Kvartersel — powered by LeanCPMS</em>.</p>
+        </div>
+
+        <div class="pricing">
+          <div>
+            <p class="label">Pricing per charge point</p>
+            <p class="sub">Contact us and we'll tell you what it would cost for your sites.</p>
+          </div>
+          <a class="button primary" href="mailto:jonas@forsslundsystems.com?subject=LeanCPMS%20Cloud">Contact us</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="wrap split">
+        <div>
+          <h2>Contact</h2>
+          <p class="section-intro">Questions, early access to the source, or LeanCPMS Cloud for your chargers: send an e-mail.</p>
+        </div>
+        <div class="contact-block">
+          <p class="mail"><a href="mailto:jonas@forsslundsystems.com">jonas@forsslundsystems.com</a></p>
+          <p>Forsslund Systems AB</p>
+          <p><a href="https://www.forsslundsystems.com">www.forsslundsystems.com</a></p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>© 2026 Forsslund Systems AB · LeanCPMS is open source under AGPL-3.0 · <a href="https://portal.leancpms.com/portal/">Log in</a></p>
+    </div>
+  </footer>
+</body>
+</html>
