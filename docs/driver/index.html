@@ -1,0 +1,1111 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Documentation for LeanCPMS, the open-source charge point management system: users and access, the cpms command line and the driver API.">
+      
+      
+      
+        <link rel="canonical" href="https://leancpms.com/docs/driver/">
+      
+      
+      
+        <link rel="prev" href="../cli/">
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="zensical-0.1.2">
+    
+    
+      
+        <title>Driver API - LeanCPMS docs</title>
+      
+    
+    
+      
+        
+      
+      <link rel="stylesheet" href="../assets/stylesheets/modern/main.ebb7f775.min.css">
+      
+        
+          
+        
+        <link rel="stylesheet" href="../assets/stylesheets/modern/palette.b60ce83d.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_scope.pathname.endsWith("/")||(__md_scope=new URL(__md_scope.pathname+"/",location)),__md_hash=e=>[...e].reduce(((e,t)=>(e<<5)-e+t.charCodeAt(0)),0),__md_get=(e,t=localStorage,_=__md_scope)=>JSON.parse(t.getItem(_.pathname+"."+e)),__md_set=(e,t,_=localStorage,a=__md_scope)=>{try{_.setItem(a.pathname+"."+e,JSON.stringify(t))}catch(e){}},document.documentElement.setAttribute("data-platform",navigator.platform)</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="teal">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer" aria-hidden="true"></label>
+    <div data-md-component="skip">
+      <a href="#__skip" class="md-skip">
+        Skip to content
+      </a>
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="https://leancpms.com/" title="LeanCPMS docs" class="md-header__button md-logo" aria-label="LeanCPMS docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-book-open" viewBox="0 0 24 24"><path d="M12 5v16M20.001 19A2 2 0 0 0 22 17V5a2 2 0 0 0-1.999-2L16 3.002A5 5 0 0 0 12 5a5 5 0 0 0-4-2H4a2 2 0 0 0-2 2v12a2 2 0 0 0 1.999 2H8a5 5 0 0 1 4 2 5 5 0 0 1 4-2z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-menu" viewBox="0 0 24 24"><path d="M4 5h16M4 12h16M4 19h16"/></svg>
+      <span class="md-visually-hidden">Navigation</span>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            LeanCPMS docs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Driver API
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="teal"  aria-label="Dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="teal"  aria-label="Light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-search" viewBox="0 0 24 24"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/></svg>
+          <span class="md-visually-hidden">Search</span>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog" aria-label="Search">
+  <button type="button" class="md-search__button">
+    Search
+  </button>
+</div>
+      
+    
+    <div class="md-header__source">
+      
+    </div>
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="./.." class="md-tabs__link">
+        
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+      
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      <li class="md-tabs__item">
+        <a href="../users-and-access/" class="md-tabs__link">
+          
+  
+  Guides
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="././" class="md-tabs__link">
+        
+  
+  Driver API
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="https://leancpms.com/" title="LeanCPMS docs" class="md-nav__button md-logo" aria-label="LeanCPMS docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-book-open" viewBox="0 0 24 24"><path d="M12 5v16M20.001 19A2 2 0 0 0 22 17V5a2 2 0 0 0-1.999-2L16 3.002A5 5 0 0 0 12 5a5 5 0 0 0-4-2H4a2 2 0 0 0-2 2v12a2 2 0 0 0 1.999 2H8a5 5 0 0 1 4 2 5 5 0 0 1 4-2z"/></svg>
+
+    </a>
+    LeanCPMS docs
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="./.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Home
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Guides
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        
+          <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_2">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  Guides
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../users-and-access/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Users and access
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cli/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  The command line
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Driver API
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="././" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Driver API
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+
+<nav class="md-nav md-nav--secondary" aria-label="On this page">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      On this page
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#pages" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Pages
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-happens-step-by-step" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        What happens, step by step
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#scheduled-start-prd-6-slice-3a" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Scheduled start (PRD §6, slice 3a)
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#a-failed-start-is-never-silent-prd-6" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        A failed start is never silent (PRD §6)
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-driver-api-apidriverv1-architecture-31" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        The driver API (<code>/api/driver/v1/</code>, architecture §3.1)
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#theme" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Theme
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#design-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Design system
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#not-built-yet" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Not built yet
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  
+                    
+                    
+                    
+                      
+                    
+                    
+                      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+                      <div class="md-sidebar-button__wrapper">
+                        <label class="md-sidebar-button" for="__toc"></label>
+                      </div>
+                    
+                  
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--secondary" aria-label="On this page">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      On this page
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#pages" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Pages
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-happens-step-by-step" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        What happens, step by step
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#scheduled-start-prd-6-slice-3a" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Scheduled start (PRD §6, slice 3a)
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#a-failed-start-is-never-silent-prd-6" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        A failed start is never silent (PRD §6)
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-driver-api-apidriverv1-architecture-31" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        The driver API (<code>/api/driver/v1/</code>, architecture §3.1)
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#theme" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Theme
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#design-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Design system
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#not-built-yet" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Not built yet
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                <a id="__skip" tabindex="-1"></a>
+                
+                  
+
+
+<h1 id="the-driver-flow-cpmsdriver">The driver flow (<code>cpms/driver/</code>)<a class="headerlink" href="#the-driver-flow-cpmsdriver" title="Permanent link">&para;</a></h1>
+<p>Drop-in charging for a driver with no account, no app and no login
+(PRD §2, architecture §3): scan the static QR code, see the price, pay by
+card, plug in, watch, stop, get a receipt. Goal: QR → charging in under a
+minute on a phone.</p>
+<h2 id="pages">Pages<a class="headerlink" href="#pages" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>URL</th>
+<th>What</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/</code></td>
+<td>only on a host in an organization's <code>driver_hosts</code>: its published sites, each with its public outlets, their live status (the QR page's badge) and a link to <code>/c/&lt;public_id&gt;</code>. The ad hoc price incl. VAT once at the top. HTMX polls every 30 s. A 404 on any other host.</td>
+</tr>
+<tr>
+<td><code>/c/&lt;public_id&gt;</code></td>
+<td>the QR code (<code>Outlet.public_id</code>: declared in the site document, or generated on first apply; stable across applies). Station, charge point, outlet, live status, the ad hoc price <strong>incl. VAT</strong> and the amount reserved, shown before anything starts (AFIR). E-mail for the receipt, accept, optionally "Start later" at a time of day, continue to payment.</td>
+</tr>
+<tr>
+<td>provider's page</td>
+<td>Stripe Checkout (or <code>/pay/fake/&lt;ref&gt;</code> in development) reserves the amount.</td>
+</tr>
+<tr>
+<td><code>/s/&lt;token&gt;</code></td>
+<td>the live page. Waiting for the payment → "plug in the cable" (with the time left) → "checking that the cable is locked" → kW, kWh, cost so far incl. VAT, Stop (or, scheduled: "charging starts at 23:00", <em>start now</em>, <em>cancel</em>) → finishing → done, with the receipt. A failed start is said here at once. HTMX polls every 3 s.</td>
+</tr>
+<tr>
+<td><code>/s/&lt;token&gt;/receipt</code></td>
+<td>the receipt (seller = the organization). Also e-mailed.</td>
+</tr>
+</tbody>
+</table>
+<p><code>&lt;token&gt;</code> is a capability: 24 random bytes, the only key to that one
+charge. A reloaded page, a locked phone or a second device finds the
+charge again with the link, and the receipt mail links back to it. The
+outlet page also remembers the browser's own active charge for a day (a
+signed cookie per outlet) and offers "show my charge".</p>
+<p>Swedish first (<code>LANGUAGE_CODE = "sv"</code>), English available from the footer.
+Strings are English in the source; the catalog is
+<code>cpms/locale/sv/LC_MESSAGES/django.po</code>, maintained with
+<code>uv run python scripts/messages.py</code> (no GNU gettext needed; <code>--check</code>
+lists anything untranslated).</p>
+<h2 id="what-happens-step-by-step">What happens, step by step<a class="headerlink" href="#what-happens-step-by-step" title="Permanent link">&para;</a></h2>
+<p>Views are thin; every change is an action in <code>services.py</code>, journaled in
+the actions journal (never with the e-mail address, the tag or the token).
+Everything after the payment page is done by the worker
+(<code>uv run manage.py worker</code>), so it happens whether or not the driver's
+phone is still on the page.</p>
+<ol type="1">
+<li><strong>Begin</strong> (<code>driver_begin</code>). The outlet must be public, priced
+   (the price list's ad hoc channel, flat tariffs only for now) and free:
+   cpms's own read models first, then a live <code>GET /chargers/{id}</code> to
+   ocpp-rest (responsive? this connector free?) right before any money is
+   reserved. A <code>DropIn</code> row is created with the price shown, and the
+   provider's checkout is opened for the plan's <code>preauth_amount</code>.</li>
+<li><strong>Payment confirmed</strong> (<code>driver_confirm_payment</code>). Triggered by the
+   provider's webhook (stored in the inbox, processed by the worker), by
+   the driver's return (the worker asks the provider a couple of seconds
+   later), or by a once-a-minute check. Each asks the provider directly; the
+   driver's browser is never trusted. The authorization becomes a ledger
+   <code>Payment</code>.</li>
+<li><strong>Start</strong> (<code>driver_start</code>). A one-time <code>id_tag</code> (<code>DRP</code> + 17 random
+   characters, 20 in total: the OCPP limit) is pushed with
+   <code>PUT /authorizations/{id_tag}</code> scoped to this one box and expiring after
+   the plug-in window, then <code>POST …/connectors/{n}/start</code>. The Aura then
+   waits for the cable.</li>
+<li><strong>Track</strong> (worker, every second). The session is found as
+   <code>consumer.Session</code> with this box and this <code>id_tag</code> (a session the
+   consumer attributes to another organization is never taken). If the
+   gateway missed the <code>session_start</code> and the session was <em>learned</em>
+   without a tag, the one learned session on this outlet since our start is
+   taken, and only if there is exactly one.<ul>
+<li>No session within <code>DRIVER_PLUG_TIMEOUT_S</code> (default 180 s; it must be
+  longer than ocpp-rest's <code>REMOTE_START_GRACE_S</code>, 120 s): the tag is
+  revoked <em>first</em>, then the reservation is released.</li>
+<li>The cost reaches the reservation: the worker sends one RemoteStop.</li>
+<li>The session ends, by our Stop or because the driver unplugged: the
+  drop-in is <code>ended</code>.</li>
+<li>A session that appears after we gave up (the box started anyway) is
+  stopped: the unpaid-session guard.</li>
+</ul>
+</li>
+<li><strong>Settle</strong> (<code>settle_payment</code>, in <code>cpms/ledger/</code>). After
+   <code>DRIVER_SETTLE_DELAY_S</code> (30 s) from a definitive <code>session_end</code>, or
+   <code>DRIVER_SETTLE_DELAY_INFERRED_S</code> (300 s) from an inferred one (a
+   definitive end with the box's own meter value may follow), the session's
+   <code>amount_incl_vat</code> is captured, capped at the authorization; 0 kWh (or
+   anything below the provider's minimum) cancels instead. If the consumer
+   could not price the session, the price shown to the driver is used.</li>
+<li><strong>Receipt mail and tag revocation.</strong> At least once; a crash between
+   sending and recording resends the same receipt (same number).</li>
+</ol>
+<h2 id="scheduled-start-prd-6-slice-3a">Scheduled start (PRD §6, slice 3a)<a class="headerlink" href="#scheduled-start-prd-6-slice-3a" title="Permanent link">&para;</a></h2>
+<p>"Start later" on the outlet page takes a time of day in the organization's
+time zone, the next time the clock shows it; <code>services.begin</code> takes any
+<code>start_at</code> (the driver API passes it on). The session <strong>starts at once</strong>,
+exactly as without it: the RemoteStart carries a limit of 0 A, which
+ocpp-rest puts into the first TxProfile, so the cable locks while the driver
+is at the car and no energy flows. The balancer is the scheduler
+(architecture §9): it reads <code>start_at</code> from <code>GET /api/v1/balancer/sessions</code>,
+keeps the session at 0 A until then and gives it its share from the next
+cycle after (<code>cpms/balancer/README.md</code>). The drop-in is <code>scheduled</code> from the
+session's start until <code>start_at</code>, then <code>charging</code>.</p>
+<ul>
+<li><em>Start now</em> sets <code>start_at</code> to now; <em>cancel</em> stops the session (0 Wh, the
+  reservation is released, no failed-start notice: she cancelled).</li>
+<li>Only where the fuse group is balanced (<code>balancing: true</code>): without a
+  balancer nothing would hold the car (<code>scheduling_not_available</code>).</li>
+<li>At most the provider's authorization window (Stripe: 7 days for an online
+  card payment) less <code>DRIVER_SCHEDULE_MARGIN_S</code> (2 days) ahead
+  (<code>start_too_late</code>): an authorization that expires before the capture
+  loses the money (architecture §3.1). The page offers only the next 24 h.</li>
+<li>If no car is plugged in within the plug-in window, or the driver starts
+  now before plugging in, the 0 A is taken off the connector so the next
+  car does not start paused.</li>
+</ul>
+<h2 id="a-failed-start-is-never-silent-prd-6">A failed start is never silent (PRD §6)<a class="headerlink" href="#a-failed-start-is-never-silent-prd-6" title="Permanent link">&para;</a></h2>
+<p>The consumer judges each session (<code>Session.failed_start</code>,
+<code>cpms/consumer/README.md</code>): it ended within a minute with 0 Wh, ended
+without energy after it was allowed current, delivered nothing for five
+minutes after it was allowed current (for a scheduled start: after
+<code>start_at</code>), or its outlet went <code>Faulted</code> under it. For every drop-in,
+scheduled or not:</p>
+<ul>
+<li>the live page says so at once (it reads the session itself, every 3 s):
+  "The charge did not start … unplug the cable, push it firmly in, and start
+  again", or for a running session with no energy, what to check, with
+  <em>Stop</em>;</li>
+<li>the worker records it once (<code>driver_failed_start</code>, journaled) and e-mails
+  the receipt address (<code>driver_send_failed_start_mail</code>, at least once, like
+  the receipt);</li>
+<li>the session settles as usual: 0 Wh cancels the reservation, no receipt.</li>
+</ul>
+<p><strong>A charge a fault stops</strong> after it has delivered (Jonas, 2026-11-06; the
+consumer's <code>Session.interrupted_at</code>) gets the same treatment, but is not a
+failed start: "The charge has stopped" on the page at once, with the
+re-plug advice and <em>Stop</em>, and one e-mail (<code>driver_interrupted</code>,
+<code>driver_send_interrupted_mail</code>). Nothing is stopped automatically. If the
+outlet leaves <code>Faulted</code> and the charge resumes, the page shows charging
+again; a second fault shows on the page but sends no second e-mail. The
+receipt follows as usual for the energy delivered.</p>
+<p>Not reported to the driver: a session she stopped herself. Energy delivered
+later clears the session's state; the drop-in keeps the record that she was
+told. Right after the box starts a session the page shows "checking that the
+cable is locked" for <code>DRIVER_LOCK_CHECK_S</code> (15 s, architecture §3.1). Both
+numbers are provisional until they are measured on real hardware.</p>
+<p>States: <code>paying → authorized → starting → charging → ended</code> (or <code>starting →
+scheduled → charging</code>, or <code>scheduled → ended</code> when cancelled), or
+<code>abandoned</code> (left the payment page, or <code>DRIVER_CHECKOUT_TIMEOUT_S</code> passed:
+the checkout is expired at the provider so it cannot be paid later),
+<code>failed</code> (declined, or the start failed), <code>timed_out</code> (no car, or the
+driver pressed Cancel). Every non-<code>ended</code> end releases any reservation; a
+payment that arrives after the drop-in gave up is recorded and released.</p>
+<p>A second driver cannot pay for an outlet that is starting or charging; a
+driver on the payment page holds the outlet for three minutes.</p>
+<h2 id="the-driver-api-apidriverv1-architecture-31">The driver API (<code>/api/driver/v1/</code>, architecture §3.1)<a class="headerlink" href="#the-driver-api-apidriverv1-architecture-31" title="Permanent link">&para;</a></h2>
+<p>The contract for an organization's own driver front end (<code>api.py</code>): a
+django-ninja API of its own, with its own OpenAPI document
+(<code>/api/driver/v1/openapi.json</code>) and docs page (<code>/api/driver/v1/docs</code>),
+separate from the operator API. v1 changes only additively; <code>state</code> and
+<code>payment.kind</code> say they may grow. The served pages stay the reference
+client: both call the same actions, and a test runs one drop-in through
+each and compares the journal and the ledger.</p>
+<table>
+<thead>
+<tr>
+<th>Endpoint</th>
+<th>Credential</th>
+<th>What</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>GET /outlets/{public_id}</code></td>
+<td>none, any origin</td>
+<td>the outlet by its QR id: site, charge point, live <code>status</code>, <code>can_start</code>, the ad hoc price incl. and excl. VAT (<code>exact</code> names the side the tariff states), the amount reserved, and <code>scheduling</code> (available here, how far ahead)</td>
+</tr>
+<tr>
+<td><code>GET /organizations/{key}/sites</code></td>
+<td>none, any origin</td>
+<td>the published sites and their public outlets, as the home page</td>
+</tr>
+<tr>
+<td><code>POST /outlets/{public_id}/start</code></td>
+<td>none</td>
+<td><code>{email, accept, language?, return_url?, start_at?}</code> → 201 <code>{token, session}</code>; the session is <code>payment_required</code> with <code>payment.checkout_url</code>. <code>accept</code> must be <code>true</code>: the driver accepted the price and the reservation shown, as the served page's checkbox asks (422 <code>price_not_accepted</code> otherwise)</td>
+</tr>
+<tr>
+<td><code>GET /sessions/{id}</code></td>
+<td>session token</td>
+<td>the session, live: <code>state</code> (<code>payment_required</code>, <code>starting</code>, <code>scheduled</code>, <code>charging</code>, <code>finishing</code>, <code>ended</code>, <code>failed_start</code>, <code>cancelled</code>, <code>failed</code>), <code>held</code>, <code>checking_cable</code>, <code>failed_start</code>, <code>interrupted</code>, energy, power, cost, payment</td>
+</tr>
+<tr>
+<td><code>POST /sessions/{id}/cancel-payment</code></td>
+<td>session token</td>
+<td>the driver left the payment page</td>
+</tr>
+<tr>
+<td><code>POST /sessions/{id}/cancel</code></td>
+<td>session token</td>
+<td>give up before the car is in; a scheduled charge: stop it</td>
+</tr>
+<tr>
+<td><code>POST /sessions/{id}/start-now</code></td>
+<td>session token</td>
+<td>a scheduled charge: do not wait</td>
+</tr>
+<tr>
+<td><code>POST /sessions/{id}/stop</code></td>
+<td>session token</td>
+<td>stop charging</td>
+</tr>
+<tr>
+<td><code>GET /sessions/{id}/receipt</code></td>
+<td>session token</td>
+<td>the receipt, once captured (404 before)</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>The session token</strong> is the capability <code>/s/&lt;token&gt;</code> is: 24 random
+  bytes, returned once by start, sent as <code>Authorization: Bearer</code>. <code>{id}</code>
+  is the session's public id (<code>DropIn.ref</code>); a token reaches its own
+  session only, and another id is a 404.</li>
+<li><strong>Refusals</strong> are errors with the codes the served pages translate:
+  <code>occupied</code>, <code>starting</code>, <code>offline</code>, <code>out_of_order</code>, <code>not_public</code>,
+  <code>no_price</code>, <code>payments_not_set_up</code>, <code>payment_provider_unavailable</code>,
+  <code>scheduling_not_available</code>, <code>start_too_late</code>, <code>return_url_not_allowed</code>,
+  <code>invalid_email</code>, <code>invalid_language</code>, <code>too_many_requests</code>, <code>price_not_accepted</code>
+  (422; the served page shows the unticked box's message for it).</li>
+<li><strong>Allowed origins</strong> (<code>cors.py</code>). The public endpoints answer any
+  origin. Start and the session endpoints answer a browser only from the
+  organization's <code>driver_origins</code> (organization document; https, or
+  <code>http://localhost</code> for development) and the hosts the instance serves
+  the driver flow on itself (its <code>driver_hosts</code>, <code>PUBLIC_BASE_URL</code>, the
+  named <code>ALLOWED_HOSTS</code>). The same list binds <code>return_url</code> for every
+  caller: payment never returns to a page that is not the operator's.
+  Payment returns to <code>return_url</code> with <code>session=&lt;id&gt;&amp;payment=done</code> or
+  <code>payment=cancelled</code> added; without it, to the served live page.</li>
+<li><strong>Rate limit.</strong> Start is limited per client address (an IPv6 /64),
+  <code>START_LIMIT</code> (10 per 10 minutes), in front of the action, shared with
+  the served page (<code>cpms.core.limits</code>: per process, enough to blunt abuse).</li>
+<li><strong>Not yet:</strong> the driver token, login and the account endpoints come with
+  driver accounts (PRD §7, slice 5a); the subscription endpoints with the
+  subscriber step.</li>
+</ul>
+<h2 id="theme">Theme<a class="headerlink" href="#theme" title="Permanent link">&para;</a></h2>
+<p>No project or customer branding is built in (architecture §14). The
+organization's name comes from the organization document; an optional
+<code>theme</code> block there sets an accent colour and a logo:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">organization</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">demo</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Demo Laddning AB</span>
+<span class="w">  </span><span class="nt">theme</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">primary</span><span class="p">:</span><span class="w"> </span><span class="s">"#0b7a3e"</span><span class="p p-Indicator">,</span><span class="nt"> logo_url</span><span class="p">:</span><span class="w"> </span><span class="s">"https://example.com/logo.svg"</span><span class="p p-Indicator">}</span>
+</code></pre></div>
+<p>Both are validated by the manifest schema (hex colour, https URL), so
+nothing reaches the page's CSS unchecked. The return URL from the payment
+page uses the host the driver came in on, so an organization's own domain
+(charge.example.se pointed at the instance) stays its own through payment.</p>
+<h2 id="design-system">Design system<a class="headerlink" href="#design-system" title="Permanent link">&para;</a></h2>
+<p>Server-rendered Django templates + HTMX + Tailwind with daisyUI (PRD §5).</p>
+<ul>
+<li><strong>Partials.</strong> A page and its HTMX fragment are the same template: Django
+  6's template partials (<code>{% partialdef panel inline %}</code> and
+  <code>render(…, "driver/live.html#panel")</code>). Small components are includes in
+  <code>templates/driver/components/</code> (price, stat, receipt, outlet header).</li>
+<li><strong>Tailwind without Node at runtime.</strong> <code>scripts/build-css.sh</code> downloads
+  Tailwind's <em>standalone CLI</em> (a single binary with Tailwind built in,
+  published by Tailwind Labs for exactly this) and daisyUI's two plugin
+  files at pinned versions with checked SHA-256s into <code>.tools/</code>
+  (gitignored), and builds <code>cpms/assets/app.css</code> into
+  <code>cpms/static/cpms/app.css</code>, which <strong>is committed</strong>. The server never
+  builds CSS; it serves the committed file after
+  <code>collectstatic</code>. Rebuild and commit after changing classes in a
+  template. The same approach is the default in Phoenix (the <code>tailwind</code> hex
+  package), in Rails (<code>tailwindcss-rails</code>) and in Django's
+  <code>django-tailwind-cli</code>; daisyUI documents its use with the standalone CLI.
+  Not thought through yet: nothing checks in CI that the committed CSS is
+  up to date with the templates.</li>
+<li><strong>htmx</strong> 2.0.4 is vendored as <code>cpms/static/vendor/htmx-2.0.4.min.js</code>.</li>
+<li>Mobile first: one column, <code>max-w-md</code>, tap targets of at least 48 px.</li>
+</ul>
+<h2 id="not-built-yet">Not built yet<a class="headerlink" href="#not-built-yet" title="Permanent link">&para;</a></h2>
+<p>Spot-priced drop-in (needs the current spot price on the page), an EVSE id
+on the page and receipt (architecture §14, comes with the OCPI slice), driver
+accounts and the driver token (slice 5a), per-organization sender domains for
+mail (today: <code>DEFAULT_FROM_EMAIL</code> with the organization's name, and its
+e-mail as Reply-To).</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-circle-arrow-up" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m16 12-4-4-4 4M12 16V8"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../cli/" class="md-footer__link md-footer__link--prev" aria-label="Previous: The command line">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-arrow-left" viewBox="0 0 24 24"><path d="m12 19-7-7 7-7M19 12H5"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                The command line
+              </div>
+            </div>
+          </a>
+        
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Forsslund Systems AB · AGPL-3.0
+    </div>
+  
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog" role="status" aria-atomic="true">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      
+      
+        
+        
+      <script id="__config" type="application/json">{"annotate":null,"base":"..","features":["navigation.tabs","navigation.sections","navigation.top","navigation.footer","navigation.indexes","toc.follow","search.highlight","content.code.copy"],"redirect":null,"search":"../assets/javascripts/workers/search.719e0d91.min.js","tags":null,"translations":{"clipboard.copied":"Copied to clipboard","clipboard.copy":"Copy to clipboard","clipboard.error":"Could not copy to clipboard","search.result.more.one":"1 more on this page","search.result.more.other":"# more on this page","search.result.none":"No matching documents","search.result.one":"1 matching document","search.result.other":"# matching documents","search.result.placeholder":"Type to start searching","search.result.term.missing":"Missing","select.version":"Select version"},"version":null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.3cb411a8.min.js"></script>
+      
+    
+  </body>
+</html>

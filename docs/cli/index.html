@@ -1,0 +1,1014 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Documentation for LeanCPMS, the open-source charge point management system: users and access, the cpms command line and the driver API.">
+      
+      
+      
+        <link rel="canonical" href="https://leancpms.com/docs/cli/">
+      
+      
+      
+        <link rel="prev" href="../users-and-access/">
+      
+      
+        <link rel="next" href="../driver/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="zensical-0.1.2">
+    
+    
+      
+        <title>The command line - LeanCPMS docs</title>
+      
+    
+    
+      
+        
+      
+      <link rel="stylesheet" href="../assets/stylesheets/modern/main.ebb7f775.min.css">
+      
+        
+          
+        
+        <link rel="stylesheet" href="../assets/stylesheets/modern/palette.b60ce83d.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_scope.pathname.endsWith("/")||(__md_scope=new URL(__md_scope.pathname+"/",location)),__md_hash=e=>[...e].reduce(((e,t)=>(e<<5)-e+t.charCodeAt(0)),0),__md_get=(e,t=localStorage,_=__md_scope)=>JSON.parse(t.getItem(_.pathname+"."+e)),__md_set=(e,t,_=localStorage,a=__md_scope)=>{try{_.setItem(a.pathname+"."+e,JSON.stringify(t))}catch(e){}},document.documentElement.setAttribute("data-platform",navigator.platform)</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="teal">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer" aria-hidden="true"></label>
+    <div data-md-component="skip">
+      <a href="#__skip" class="md-skip">
+        Skip to content
+      </a>
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="https://leancpms.com/" title="LeanCPMS docs" class="md-header__button md-logo" aria-label="LeanCPMS docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-book-open" viewBox="0 0 24 24"><path d="M12 5v16M20.001 19A2 2 0 0 0 22 17V5a2 2 0 0 0-1.999-2L16 3.002A5 5 0 0 0 12 5a5 5 0 0 0-4-2H4a2 2 0 0 0-2 2v12a2 2 0 0 0 1.999 2H8a5 5 0 0 1 4 2 5 5 0 0 1 4-2z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-menu" viewBox="0 0 24 24"><path d="M4 5h16M4 12h16M4 19h16"/></svg>
+      <span class="md-visually-hidden">Navigation</span>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            LeanCPMS docs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              The command line
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="teal"  aria-label="Dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="teal"  aria-label="Light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-search" viewBox="0 0 24 24"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/></svg>
+          <span class="md-visually-hidden">Search</span>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog" aria-label="Search">
+  <button type="button" class="md-search__button">
+    Search
+  </button>
+</div>
+      
+    
+    <div class="md-header__source">
+      
+    </div>
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="./.." class="md-tabs__link">
+        
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+      
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../users-and-access/" class="md-tabs__link">
+          
+  
+  Guides
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../driver/" class="md-tabs__link">
+        
+  
+  Driver API
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="https://leancpms.com/" title="LeanCPMS docs" class="md-nav__button md-logo" aria-label="LeanCPMS docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-book-open" viewBox="0 0 24 24"><path d="M12 5v16M20.001 19A2 2 0 0 0 22 17V5a2 2 0 0 0-1.999-2L16 3.002A5 5 0 0 0 12 5a5 5 0 0 0-4-2H4a2 2 0 0 0-2 2v12a2 2 0 0 0 1.999 2H8a5 5 0 0 1 4 2 5 5 0 0 1 4-2z"/></svg>
+
+    </a>
+    LeanCPMS docs
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="./.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Home
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Guides
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        
+          <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+            <label class="md-nav__title" for="__nav_2">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  Guides
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../users-and-access/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Users and access
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  The command line
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="././" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  The command line
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+
+<nav class="md-nav md-nav--secondary" aria-label="On this page">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      On this page
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#install" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Install
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configure" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Configure
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Configure">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#machine-keys-for-ci-and-agents" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Machine keys, for CI and agents
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#use" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Use
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#a-repository-of-manifests" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        A repository of manifests
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#in-your-editor-the-json-schema" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        In your editor: the JSON Schema
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#for-agents" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        For agents
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#releasing-maintainers" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Releasing (maintainers)
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../driver/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Driver API
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  
+                    
+                    
+                    
+                      
+                    
+                    
+                      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+                      <div class="md-sidebar-button__wrapper">
+                        <label class="md-sidebar-button" for="__toc"></label>
+                      </div>
+                    
+                  
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--secondary" aria-label="On this page">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      On this page
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#install" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Install
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configure" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Configure
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Configure">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#machine-keys-for-ci-and-agents" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Machine keys, for CI and agents
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#use" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Use
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#a-repository-of-manifests" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        A repository of manifests
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#in-your-editor-the-json-schema" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        In your editor: the JSON Schema
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#for-agents" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        For agents
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#releasing-maintainers" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Releasing (maintainers)
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                <a id="__skip" tabindex="-1"></a>
+                
+                  
+
+
+<h1 id="cpms-the-leancpms-command-line"><code>cpms</code>, the LeanCPMS command line<a class="headerlink" href="#cpms-the-leancpms-command-line" title="Permanent link">&para;</a></h1>
+<p><code>cpms</code> manages an organization in a LeanCPMS instance from your own
+machine: live state, sessions, the monthly settlements, and the declared
+state (organization, price list, sites) as YAML documents you can keep in
+a git repository. It talks to the instance's JSON API over HTTPS with an
+API key, and the same commands work for people and for AI agents.</p>
+<p>This directory builds <code>leancpms-cli</code>, the command without the server. It
+depends on httpx, pydantic and PyYAML only.</p>
+<h2 id="install">Install<a class="headerlink" href="#install" title="Permanent link">&para;</a></h2>
+<p>With <a href="https://docs.astral.sh/uv/">uv</a>, from PyPI:</p>
+<div class="highlight"><pre><span></span><code>uv<span class="w"> </span>tool<span class="w"> </span>install<span class="w"> </span>leancpms-cli
+cpms<span class="w"> </span>--help
+</code></pre></div>
+<p>That needs no access to the repository. With access, also from a GitHub
+release (a tag <code>cli-v&lt;version&gt;</code>) or straight from the repository:</p>
+<div class="highlight"><pre><span></span><code>gh<span class="w"> </span>release<span class="w"> </span>download<span class="w"> </span>cli-v0.1.4<span class="w"> </span>--repo<span class="w"> </span>forsslund/leancpms<span class="w"> </span>--pattern<span class="w"> </span><span class="s1">'*.whl'</span>
+uv<span class="w"> </span>tool<span class="w"> </span>install<span class="w"> </span>./leancpms_cli-0.1.4-py3-none-any.whl
+<span class="c1"># or</span>
+uv<span class="w"> </span>tool<span class="w"> </span>install<span class="w"> </span><span class="s2">"git+https://github.com/forsslund/leancpms#subdirectory=cli"</span>
+</code></pre></div>
+<ul>
+<li>The repository is private for now, so these two need read access to it
+  on GitHub; over SSH the URL is
+  <code>git+ssh://git@github.com/forsslund/leancpms#subdirectory=cli</code>.</li>
+<li>It needs Python 3.14. uv downloads it if your machine lacks it.</li>
+<li>To get a newer version, run <code>uv tool upgrade leancpms-cli</code>. To pin a
+  version, add <code>@&lt;tag or commit&gt;</code> after the repository URL.</li>
+<li><code>pipx install "git+…#subdirectory=cli"</code> works too.</li>
+<li>Do not install it into an environment that already has the server
+  (<code>leancpms</code>). The server already includes <code>cpms</code>, and both packages
+  carry the same files, so uninstalling one breaks the other.</li>
+</ul>
+<h2 id="configure">Configure<a class="headerlink" href="#configure" title="Permanent link">&para;</a></h2>
+<p>Log in with the same e-mail address you use for the instance's portal:</p>
+<div class="highlight"><pre><span></span><code>cpms<span class="w"> </span>login<span class="w"> </span>--url<span class="w"> </span>https://cpms.example.com
+</code></pre></div>
+<p>It prints a code and opens the portal's page for it in your browser (or
+prints the address only: <code>--no-browser</code>, or no display). Log in there if
+you are not, check that the page shows the same code, choose your
+organization and whether the key may act (<code>write</code>) or only look (<code>read</code>),
+and approve. Your role as a member decides which you may choose: members
+are <code>read</code> unless the operator, or a colleague with a <code>write</code> key, made
+them <code>write</code> (<code>cpms members set-role</code>). <code>cpms login</code> waits for that and then saves a
+<strong>personal key</strong>, yours and that organization's, as the profile
+<code>[default]</code> (<code>--profile NAME</code> for another) in <code>~/.config/cpms/config.toml</code>,
+readable only by you. Other profiles in the file stay as they were.</p>
+<div class="highlight"><pre><span></span><code>cpms<span class="w"> </span>whoami<span class="w">      </span><span class="c1"># which key is in use, whose, for which organization</span>
+cpms<span class="w"> </span><span class="nb">logout</span><span class="w">      </span><span class="c1"># revokes the key on the server and removes the profile</span>
+</code></pre></div>
+<p>The key stops working when you are removed as a member, and so does
+every key you issued with it. Approve a code only if you just ran
+<code>cpms login</code> yourself: whoever started it gets the key.
+<a href="../users-and-access/"><code>docs/users-and-access.md</code></a> explains members, roles and keys in full, with
+several computers, a lost computer, and common tasks.</p>
+<h3 id="machine-keys-for-ci-and-agents">Machine keys, for CI and agents<a class="headerlink" href="#machine-keys-for-ci-and-agents" title="Permanent link">&para;</a></h3>
+<p>A pipeline or an agent of its own gets a machine key instead, which
+records who issued it: <code>cpms keys issue --name ci --scope read</code> with your
+personal <code>write</code> key. It is shown only once. An organization key sees only
+its own organization. A key you issue lives only as long as your
+membership: when you leave, it is revoked with your own. An integration
+that must outlive you gets its key from the operator. Members you add do
+stay when you leave; <code>cpms members list</code> shows who added whom.</p>
+<p>Put the URL and the key in <code>~/.config/cpms/config.toml</code> (or
+<code>$XDG_CONFIG_HOME/cpms/</code>, or the path in <code>CPMS_CONFIG</code>), readable only by
+you (<code>chmod 600</code>):</p>
+<div class="highlight"><pre><span></span><code><span class="k">[default]</span>
+<span class="n">url</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"https://cpms.example.com"</span>
+<span class="n">api_key</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"lcp_…"</span>
+
+<span class="k">[test]</span>
+<span class="n">url</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"http://localhost:8000"</span>
+<span class="n">api_key</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"lcp_…"</span>
+</code></pre></div>
+<p>Alternatively, set <code>CPMS_URL</code> and <code>CPMS_API_KEY</code> in the environment, which
+suits CI and agents. <code>--profile test</code> (or <code>CPMS_PROFILE=test</code>) picks a
+profile. Without a profile, the environment wins, then <code>[default]</code>.
+A networked command that has neither exits 2 and says what to set.</p>
+<h2 id="use">Use<a class="headerlink" href="#use" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>cpms<span class="w">                                      </span><span class="c1"># live state: sites, fuse groups, outlets, current per phase</span>
+cpms<span class="w"> </span>sessions<span class="w"> </span>--since<span class="w"> </span><span class="m">2026</span>-10-01
+cpms<span class="w"> </span>report<span class="w"> </span>settlements<span class="w"> </span>--month<span class="w"> </span><span class="m">2026</span>-10<span class="w">   </span><span class="c1"># the month's settlements per site, with bookkeeping proposals</span>
+cpms<span class="w"> </span>manifest<span class="w"> </span><span class="nb">export</span><span class="w"> </span>acme<span class="w"> </span>&gt;<span class="w"> </span>all.yaml
+cpms<span class="w"> </span>manifest<span class="w"> </span><span class="nb">export</span><span class="w"> </span>acme<span class="w"> </span>--site<span class="w"> </span>main-street<span class="w"> </span>&gt;<span class="w"> </span>sites/main-street.yaml
+cpms<span class="w"> </span>manifest<span class="w"> </span>validate<span class="w"> </span>sites/main-street.yaml<span class="w">   </span><span class="c1"># offline: the schema</span>
+cpms<span class="w"> </span>manifest<span class="w"> </span>plan<span class="w"> </span>sites/main-street.yaml<span class="w">       </span><span class="c1"># the server: the diff, references, live warnings</span>
+cpms<span class="w"> </span>manifest<span class="w"> </span>apply<span class="w"> </span>sites/main-street.yaml<span class="w"> </span>-m<span class="w"> </span><span class="s2">"Fused up to 50 A"</span>
+cpms<span class="w"> </span>manifest<span class="w"> </span><span class="nb">history</span><span class="w"> </span>acme<span class="w"> </span>--site<span class="w"> </span>main-street
+</code></pre></div>
+<p><code>cpms --help</code> and <code>cpms manifest --help</code> list the rest.</p>
+<h2 id="a-repository-of-manifests">A repository of manifests<a class="headerlink" href="#a-repository-of-manifests" title="Permanent link">&para;</a></h2>
+<p>One file per document works well:</p>
+<div class="highlight"><pre><span></span><code>organization.yaml
+pricelist.yaml
+sites/main-street.yaml
+sites/harbour.yaml
+</code></pre></div>
+<p>Edit a file, run <code>validate</code> and <code>plan</code>, commit, then run <code>apply</code> with the
+commit's reason as <code>-m</code>. The server holds the truth and the files are a
+way to say things: if someone changed a price in the portal, <code>plan</code> shows
+that applying your file would undo it, and <code>export</code> brings the file up to
+date. <code>apply</code> refuses a
+document that changed on the server since your plan; plan again. Removing
+anything needs <code>--prune</code>. <code>validate</code> needs no key, so CI can run it on
+every pull request; <code>plan</code> needs one.</p>
+<p>An outlet's <code>public_id</code> is the id in its QR code (<code>/c/&lt;public_id&gt;</code>). Leave
+it out and the server makes one up on first apply and keeps it. Once the
+codes are printed, write the ids into the site file
+(<code>- {connector: 1, key: s1-1, public_id: h7k2m9pq}</code>): a declared id applies,
+also on a new server, and <code>plan</code> warns before an outlet's id changes.</p>
+<h2 id="in-your-editor-the-json-schema">In your editor: the JSON Schema<a class="headerlink" href="#in-your-editor-the-json-schema" title="Permanent link">&para;</a></h2>
+<p>The documents have a JSON Schema, so an editor can complete field names
+and flag mistakes as you type. That works in editors that use
+yaml-language-server: VS Code with Red Hat's YAML extension, Neovim,
+Helix, Zed. Add this line at the top of each file:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># yaml-language-server: $schema=https://raw.githubusercontent.com/forsslund/leancpms/main/schema/manifest.cpms-v1.schema.json</span>
+</code></pre></div>
+<p>That URL works once the repository is public; replace <code>main</code> with a tag
+to pin a version. Until then, use a local copy, written by the command
+itself and kept in your manifest repository:</p>
+<div class="highlight"><pre><span></span><code>cpms<span class="w"> </span>manifest<span class="w"> </span>schema<span class="w"> </span>&gt;<span class="w"> </span>cpms-v1.schema.json
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="c1"># yaml-language-server: $schema=../cpms-v1.schema.json</span>
+</code></pre></div>
+<p>The path is relative to the YAML file. <code>export</code> does not write the
+line, so add it again after an export.</p>
+<p>The schema checks types, required and unknown fields, allowed values,
+key spelling, and that amounts are quoted (<code>"4.70"</code>, not <code>4.70</code>). It does
+not check anything that spans several fields: a budget above the fuse,
+duplicate keys, ocpp ids or public ids, a plan naming a missing tariff, or
+an unknown time zone. <code>validate</code> and <code>plan</code> check those. Only <code>plan</code>
+knows whether another outlet on the server already has a public id.</p>
+<h2 id="for-agents">For agents<a class="headerlink" href="#for-agents" title="Permanent link">&para;</a></h2>
+<ul>
+<li><code>--json</code> works on every command, before or after the subcommand.</li>
+<li>Exit codes: 0 ok, 1 the action failed (the server said no, the server
+  could not be reached, a plan has errors), 2 usage or configuration.</li>
+<li><code>cpms manifest apply</code> never prompts without a TTY. It prints the plan
+  and exits 2 unless you pass <code>--yes</code>. Show the plan to a person first,
+  then apply with <code>--yes -m "why"</code>.</li>
+<li><code>session … stop|close</code> acts at once, with no confirmation step.</li>
+<li>Pass the key in the environment or the config file, never on the
+  command line or in a transcript.</li>
+</ul>
+<h2 id="releasing-maintainers">Releasing (maintainers)<a class="headerlink" href="#releasing-maintainers" title="Permanent link">&para;</a></h2>
+<p>Raise <code>version</code> in both <code>cli/pyproject.toml</code> and the root <code>pyproject.toml</code>
+(a test keeps them equal), then tag and push:</p>
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>tag<span class="w"> </span>cli-v0.1.4<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>git<span class="w"> </span>push<span class="w"> </span>origin<span class="w"> </span>cli-v0.1.4
+</code></pre></div>
+<p><code>.github/workflows/release-cli.yml</code> builds the wheel and sdist, smoke-tests
+the wheel, and attaches both to a GitHub release. It also publishes to PyPI
+when the repository variable <code>PYPI_PUBLISH</code> is <code>true</code>. That needs, once:
+a PyPI account with two-factor authentication; a <em>pending trusted
+publisher</em> on PyPI for the project <code>leancpms-cli</code> (owner <code>forsslund</code>,
+repository <code>leancpms</code>, workflow <code>release-cli.yml</code>, environment <code>pypi</code>);
+and an environment <code>pypi</code> in the GitHub repository's settings. A pending
+publisher does not reserve the name: if someone else registers
+<code>leancpms-cli</code> first, it becomes invalid. The first release creates the
+project and so reserves the name. Trusted publishing uses GitHub's OIDC
+token, so no PyPI token is stored anywhere. A file published to PyPI cannot be replaced,
+only yanked: a wrong release is fixed with a new version.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-circle-arrow-up" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m16 12-4-4-4 4M12 16V8"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../users-and-access/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Users and access">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-arrow-left" viewBox="0 0 24 24"><path d="m12 19-7-7 7-7M19 12H5"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Users and access
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../driver/" class="md-footer__link md-footer__link--next" aria-label="Next: Driver API">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Driver API
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-arrow-right" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Forsslund Systems AB · AGPL-3.0
+    </div>
+  
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog" role="status" aria-atomic="true">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      
+      
+        
+        
+      <script id="__config" type="application/json">{"annotate":null,"base":"..","features":["navigation.tabs","navigation.sections","navigation.top","navigation.footer","navigation.indexes","toc.follow","search.highlight","content.code.copy"],"redirect":null,"search":"../assets/javascripts/workers/search.719e0d91.min.js","tags":null,"translations":{"clipboard.copied":"Copied to clipboard","clipboard.copy":"Copy to clipboard","clipboard.error":"Could not copy to clipboard","search.result.more.one":"1 more on this page","search.result.more.other":"# more on this page","search.result.none":"No matching documents","search.result.one":"1 matching document","search.result.other":"# matching documents","search.result.placeholder":"Type to start searching","search.result.term.missing":"Missing","select.version":"Select version"},"version":null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.3cb411a8.min.js"></script>
+      
+    
+  </body>
+</html>

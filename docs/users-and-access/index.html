@@ -1,0 +1,1976 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Documentation for LeanCPMS, the open-source charge point management system: users and access, the cpms command line and the driver API.">
+      
+      
+      
+        <link rel="canonical" href="https://leancpms.com/docs/users-and-access/">
+      
+      
+      
+        <link rel="prev" href="./..">
+      
+      
+        <link rel="next" href="../cli/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="zensical-0.1.2">
+    
+    
+      
+        <title>Users and access - LeanCPMS docs</title>
+      
+    
+    
+      
+        
+      
+      <link rel="stylesheet" href="../assets/stylesheets/modern/main.ebb7f775.min.css">
+      
+        
+          
+        
+        <link rel="stylesheet" href="../assets/stylesheets/modern/palette.b60ce83d.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_scope.pathname.endsWith("/")||(__md_scope=new URL(__md_scope.pathname+"/",location)),__md_hash=e=>[...e].reduce(((e,t)=>(e<<5)-e+t.charCodeAt(0)),0),__md_get=(e,t=localStorage,_=__md_scope)=>JSON.parse(t.getItem(_.pathname+"."+e)),__md_set=(e,t,_=localStorage,a=__md_scope)=>{try{_.setItem(a.pathname+"."+e,JSON.stringify(t))}catch(e){}},document.documentElement.setAttribute("data-platform",navigator.platform)</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="teal">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer" aria-hidden="true"></label>
+    <div data-md-component="skip">
+      <a href="#__skip" class="md-skip">
+        Skip to content
+      </a>
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="https://leancpms.com/" title="LeanCPMS docs" class="md-header__button md-logo" aria-label="LeanCPMS docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-book-open" viewBox="0 0 24 24"><path d="M12 5v16M20.001 19A2 2 0 0 0 22 17V5a2 2 0 0 0-1.999-2L16 3.002A5 5 0 0 0 12 5a5 5 0 0 0-4-2H4a2 2 0 0 0-2 2v12a2 2 0 0 0 1.999 2H8a5 5 0 0 1 4 2 5 5 0 0 1 4-2z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-menu" viewBox="0 0 24 24"><path d="M4 5h16M4 12h16M4 19h16"/></svg>
+      <span class="md-visually-hidden">Navigation</span>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            LeanCPMS docs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Users and access
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="teal"  aria-label="Dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="teal"  aria-label="Light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-search" viewBox="0 0 24 24"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/></svg>
+          <span class="md-visually-hidden">Search</span>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog" aria-label="Search">
+  <button type="button" class="md-search__button">
+    Search
+  </button>
+</div>
+      
+    
+    <div class="md-header__source">
+      
+    </div>
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="./.." class="md-tabs__link">
+        
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+      
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="././" class="md-tabs__link">
+          
+  
+  Guides
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../driver/" class="md-tabs__link">
+        
+  
+  Driver API
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="https://leancpms.com/" title="LeanCPMS docs" class="md-nav__button md-logo" aria-label="LeanCPMS docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-book-open" viewBox="0 0 24 24"><path d="M12 5v16M20.001 19A2 2 0 0 0 22 17V5a2 2 0 0 0-1.999-2L16 3.002A5 5 0 0 0 12 5a5 5 0 0 0-4-2H4a2 2 0 0 0-2 2v12a2 2 0 0 0 1.999 2H8a5 5 0 0 1 4 2 5 5 0 0 1 4-2z"/></svg>
+
+    </a>
+    LeanCPMS docs
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="./.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Home
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Guides
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        
+          <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+            <label class="md-nav__title" for="__nav_2">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  Guides
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+                  
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Users and access
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="././" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Users and access
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+
+<nav class="md-nav md-nav--secondary" aria-label="On this page">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      On this page
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-concepts" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        1. Concepts
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Concepts">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#people" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        People
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-operator-and-organizations" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        The operator and organizations
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#memberships-and-roles" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Memberships and roles
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-operator-membership-is-the-admin" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        The operator membership is the admin
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#api-keys" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        API keys
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-each-kind-of-key-may-do" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        What each kind of key may do
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#other-credentials" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Other credentials
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-actions-journal" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        The actions journal
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-on-leancpms-cloud" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        2. On LeanCPMS Cloud
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. On LeanCPMS Cloud">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#host-names" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Host names
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-someone-becomes-a-member" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        How someone becomes a member
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#logging-in-to-the-portal" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Logging in to the portal
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-admin-pages" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        The admin pages
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-the-command-line" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        3. The command line
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. The command line">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#install" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Install
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#log-in-cpms-login" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Log in: <code>cpms login</code>
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#profiles" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Profiles
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cpms-whoami-and-cpms-logout" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        <code>cpms whoami</code> and <code>cpms logout</code>
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#several-computers" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Several computers
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#when-a-computer-is-lost-or-stolen" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        When a computer is lost or stolen
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#everyday-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Everyday commands
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scripts-ci-and-agents" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Scripts, CI and agents
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-common-tasks" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        4. Common tasks
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Common tasks">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#add-a-colleague" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Add a colleague
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#give-or-lower-a-role" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Give or lower a role
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#remove-someone" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Remove someone
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a-key-for-an-integration-that-must-outlive-a-person" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        A key for an integration that must outlive a person
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#revoke-a-key" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Revoke a key
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-running-your-own-instance" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        5. Running your own instance
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cli/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  The command line
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../driver/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Driver API
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  
+                    
+                    
+                    
+                      
+                    
+                    
+                      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+                      <div class="md-sidebar-button__wrapper">
+                        <label class="md-sidebar-button" for="__toc"></label>
+                      </div>
+                    
+                  
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--secondary" aria-label="On this page">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      On this page
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-concepts" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        1. Concepts
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Concepts">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#people" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        People
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-operator-and-organizations" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        The operator and organizations
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#memberships-and-roles" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Memberships and roles
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-operator-membership-is-the-admin" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        The operator membership is the admin
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#api-keys" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        API keys
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-each-kind-of-key-may-do" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        What each kind of key may do
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#other-credentials" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Other credentials
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-actions-journal" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        The actions journal
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-on-leancpms-cloud" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        2. On LeanCPMS Cloud
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. On LeanCPMS Cloud">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#host-names" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Host names
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-someone-becomes-a-member" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        How someone becomes a member
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#logging-in-to-the-portal" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Logging in to the portal
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-admin-pages" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        The admin pages
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-the-command-line" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        3. The command line
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. The command line">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#install" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Install
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#log-in-cpms-login" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Log in: <code>cpms login</code>
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#profiles" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Profiles
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cpms-whoami-and-cpms-logout" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        <code>cpms whoami</code> and <code>cpms logout</code>
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#several-computers" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Several computers
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#when-a-computer-is-lost-or-stolen" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        When a computer is lost or stolen
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#everyday-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Everyday commands
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scripts-ci-and-agents" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Scripts, CI and agents
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-common-tasks" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        4. Common tasks
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Common tasks">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#add-a-colleague" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Add a colleague
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#give-or-lower-a-role" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Give or lower a role
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#remove-someone" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Remove someone
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a-key-for-an-integration-that-must-outlive-a-person" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        A key for an integration that must outlive a person
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#revoke-a-key" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Revoke a key
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-running-your-own-instance" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        5. Running your own instance
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                <a id="__skip" tabindex="-1"></a>
+                
+                  
+
+
+<h1 id="users-and-access">Users and access<a class="headerlink" href="#users-and-access" title="Permanent link">&para;</a></h1>
+<p>How people and machines get into LeanCPMS, what each of them may do, and
+how an organization manages that itself. It is written for two readers:
+someone who wants to understand the model without reading code, and an
+organization's administrator who is about to manage their organization
+from the command line.</p>
+<p>The worked example is <strong>LeanCPMS Cloud</strong>, the hosted instance run by
+Forsslund Systems AB. A self-hosted instance works the same way under its
+own host names; the differences are at the end. The examples use a made-up
+organization <code>acme</code> and addresses at <code>example.com</code>.</p>
+<p>This describes the code as it is (leancpms-cli 0.1.4). The design and its
+reasons are in <code>docs/architecture.md</code>
+§3
+and §11.</p>
+<p><strong>Contents</strong></p>
+<ol type="1">
+<li><a href="#1-concepts">Concepts</a></li>
+<li><a href="#2-on-leancpms-cloud">On LeanCPMS Cloud</a></li>
+<li><a href="#3-the-command-line">The command line</a></li>
+<li><a href="#4-common-tasks">Common tasks</a></li>
+<li><a href="#5-running-your-own-instance">Running your own instance</a></li>
+</ol>
+<hr />
+<h2 id="1-concepts">1. Concepts<a class="headerlink" href="#1-concepts" title="Permanent link">&para;</a></h2>
+<h3 id="people">People<a class="headerlink" href="#people" title="Permanent link">&para;</a></h3>
+<p>A person is <strong>one e-mail address</strong>. There are no passwords and no user
+names. To log in to the portal you type your address, LeanCPMS e-mails you
+a short one-time code, and you type the code. Everything a person does,
+in the portal and on the command line, goes back to that one identity.</p>
+<p>Nobody signs up. An address can log in only after someone has made it a
+<strong>member</strong> (below). An address that is not a member gets no code at all,
+not even an error message, so that the login page does not reveal who has
+an account.</p>
+<h3 id="the-operator-and-organizations">The operator and organizations<a class="headerlink" href="#the-operator-and-organizations" title="Permanent link">&para;</a></h3>
+<p>An instance holds several <strong>organizations</strong>. An organization is a company
+that owns charging stations: its sites, charge points, price list, sessions,
+receipts and monthly settlements belong to it, and it cannot see anyone
+else's.</p>
+<p>The <strong>operator</strong> is whoever runs the instance. On LeanCPMS Cloud that is
+Forsslund Systems AB. The operator is not an organization; it stands above
+all of them and sees every organization.</p>
+<h3 id="memberships-and-roles">Memberships and roles<a class="headerlink" href="#memberships-and-roles" title="Permanent link">&para;</a></h3>
+<p>A <strong>membership</strong> connects a person to one organization, or to the operator.
+A person can have several: member of <code>acme</code> and of <code>globex</code>, say. Each
+membership has a <strong>role</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>Role</th>
+<th>In the portal</th>
+<th>On the command line</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>read</code> (the default)</td>
+<td>sees everything about the organization</td>
+<td>gets keys that may only look</td>
+</tr>
+<tr>
+<td><code>write</code></td>
+<td>the same: the portal only reads, whatever the role</td>
+<td>gets keys that may also act: apply manifests, manage members and keys, stop sessions</td>
+</tr>
+</tbody>
+</table>
+<p>So the role does not change what you see; it caps what the keys you get
+with <code>cpms login</code> may do (see <a href="#api-keys">Keys</a>).</p>
+<p>Each membership records who added it. Removing a person does <strong>not</strong>
+remove the members they added: when someone leaves, look at
+<code>cpms members list</code> and decide about the people they brought in.</p>
+<h3 id="the-operator-membership-is-the-admin">The operator membership is the admin<a class="headerlink" href="#the-operator-membership-is-the-admin" title="Permanent link">&para;</a></h3>
+<p>A membership without an organization is an <strong>operator membership</strong>. It is
+the instance's "superuser":</p>
+<ul>
+<li>In the portal it shows every organization.</li>
+<li>It is the only way into the Django admin pages at <code>/admin/</code>, which are a
+  read-only view of every table (<code>cpms/portal/admin_site.py</code>).</li>
+<li>With <code>cpms login</code> it can get an <strong>operator key</strong>, which reaches every
+  organization and the operator-only commands (opening the gateway to
+  unknown charge points, the organization document, the balancer).</li>
+</ul>
+<p>Django's own <code>is_staff</code> and <code>is_superuser</code> flags decide nothing about
+access: nobody gets into <code>/admin/</code> or sees an extra organization because of
+them, and they are never needed. Their one effect is protective: an
+organization's key cannot add, change or remove an account that has one of
+those flags, and losing a membership never switches such an account off
+(<code>cpms/actions/members.py</code>). Operator memberships are given by the
+operator only; an organization can never create one.</p>
+<h3 id="api-keys">API keys<a class="headerlink" href="#api-keys" title="Permanent link">&para;</a></h3>
+<p>Everything that is not a person in a browser talks to the instance's JSON
+API with an <strong>API key</strong>, sent as <code>Authorization: Bearer &lt;key&gt;</code>. The command
+line <code>cpms</code> is one such client.</p>
+<p>A key looks like <code>lcp_3f9a1c2e_&lt;43 more characters&gt;</code>. The part after
+<code>lcp_</code>, here <code>3f9a1c2e</code>, is its <strong>prefix</strong>: it is not secret, it names the
+key in lists and logs, and it is what you revoke. The rest is the secret.
+The instance stores only a hash of the whole key, so a key is shown exactly
+once, when it is made, and can never be shown again. Lose it and you make a
+new one.</p>
+<p>Every key has three properties:</p>
+<ul>
+<li><strong>Who it is for.</strong> An <em>organization key</em> reaches one organization. An
+  <em>operator key</em> reaches every organization and the operator-only commands.</li>
+<li><strong>Its scope.</strong> A <code>read</code> key may only look (HTTP GET). A <code>write</code> key may
+  also act. A <code>read</code> key may do one thing besides looking: revoke itself
+  (<code>cpms logout</code>).</li>
+<li><strong>Whose it is.</strong> A <em>personal key</em> belongs to a person: <code>cpms login</code> gets
+  it after the person approved it in the portal, and it is named after the
+  computer, such as <code>cpms on anna-laptop</code>. A <em>machine key</em> belongs to no
+  person: it is made with <code>cpms keys issue</code> for a script, a CI pipeline, a
+  dashboard or an agent, and it records <strong>which key issued it</strong>.</li>
+</ul>
+<p>The rules that follow from that:</p>
+<ul>
+<li><strong>A role caps personal keys.</strong> A <code>read</code> member gets only <code>read</code> keys
+  from <code>cpms login</code>. A <code>write</code> member may choose either.</li>
+<li><strong>A key never makes a wider key.</strong> An organization's <code>write</code> key may
+  issue keys for its own organization, <code>read</code> or <code>write</code>; never an operator
+  key, never a key for another organization. A <code>read</code> key issues nothing,
+  and may not list keys or members either, since lists of keys and members
+  are part of managing them.</li>
+<li><strong>Removing a member revokes their keys, and every key made from them.</strong>
+  When a person loses a membership, their personal keys for it stop
+  working, and so does every machine key issued with one of those keys,
+  and every key issued with <em>those</em>, however far down. A personal key the
+  person had already revoked (with <code>cpms logout</code>, say) still counts: the
+  keys made from it go too.</li>
+<li><strong>Lowering a role does the same for <code>write</code>.</strong> Lowered from <code>write</code> to
+  <code>read</code>, a member's personal <code>write</code> keys are revoked, together with every
+  key issued from them, including <code>read</code> keys issued from them.</li>
+<li><strong>A switched-off account's keys stop working.</strong> A person whose last
+  membership is removed is switched off: they can no longer log in, their
+  portal login ends, and any personal key of theirs still left is refused.</li>
+<li><strong>Revoking one key revokes only that key.</strong> <code>cpms keys revoke</code> and
+  <code>cpms logout</code> do not cascade: machine keys issued with the revoked key
+  keep working. They still die with their maker's membership, as above.</li>
+</ul>
+<p>The consequence to remember: <strong>a machine key lives only as long as the
+membership of the person whose key issued it.</strong> That is deliberate, so
+that nobody leaves behind working keys when they leave. A key for an
+integration that must keep working when people come and go is issued
+by the operator, from a key with no person in its chain (see
+<a href="#a-key-for-an-integration-that-must-outlive-a-person">Common tasks</a>).</p>
+<p>Who owns or issued a key, and who added a member, is shown as an e-mail
+address only to those who may see that person in the members list: the
+operator, and the organization the person is a member of now. Others see
+"operator" or "former member".</p>
+<h3 id="what-each-kind-of-key-may-do">What each kind of key may do<a class="headerlink" href="#what-each-kind-of-key-may-do" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>organization <code>read</code> key</th>
+<th>organization <code>write</code> key</th>
+<th>operator key</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Live state, sessions, events, monthly settlements</td>
+<td>own organization</td>
+<td>own organization</td>
+<td>every organization</td>
+</tr>
+<tr>
+<td>Export manifests, history, diff</td>
+<td>own organization</td>
+<td>own organization</td>
+<td>every organization</td>
+</tr>
+<tr>
+<td>Plan and apply the price list and site documents</td>
+<td>no</td>
+<td>own organization</td>
+<td>every organization</td>
+</tr>
+<tr>
+<td>Plan and apply the organization document</td>
+<td>no</td>
+<td>no</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>Stop or close a session, rekey a charge point</td>
+<td>no</td>
+<td>own organization</td>
+<td>every organization</td>
+</tr>
+<tr>
+<td>OCPI connections</td>
+<td>look</td>
+<td>own organization</td>
+<td>every organization</td>
+</tr>
+<tr>
+<td>List, add, remove members, change roles</td>
+<td>no</td>
+<td>own organization's members (never an operator member)</td>
+<td>everyone</td>
+</tr>
+<tr>
+<td>List, issue, revoke keys</td>
+<td>no</td>
+<td>own organization's keys</td>
+<td>every key</td>
+</tr>
+<tr>
+<td>The gateway's admission window for unknown charge points (<code>cpms admission</code>)</td>
+<td>no</td>
+<td>no</td>
+<td>yes (opening it needs <code>write</code>)</td>
+</tr>
+<tr>
+<td>Revoke itself (<code>cpms logout</code>), <code>cpms whoami</code></td>
+<td>yes</td>
+<td>yes</td>
+<td>yes</td>
+</tr>
+</tbody>
+</table>
+<p>An operator key also has a scope: an operator <code>read</code> key looks at
+everything and changes nothing.</p>
+<h3 id="other-credentials">Other credentials<a class="headerlink" href="#other-credentials" title="Permanent link">&para;</a></h3>
+<p>These are not for people and not for the API, but they exist and it helps
+to know who handles them.</p>
+<ul>
+<li><strong>OCPI tokens.</strong> A roaming partner (an eMSP, or a registry such as Nobil)
+  talks to the instance over OCPI with tokens of its own, one connection
+  per organization and partner. <code>cpms ocpi connect acme --name partner</code>
+  makes the connection and prints Token A once, to send to the partner;
+  the partner registers, and the tokens are exchanged automatically.
+  <code>cpms ocpi disconnect</code> ends it. An organization's <code>write</code> key may do this
+  for its own organization; on LeanCPMS Cloud the operator usually does.</li>
+<li><strong>Charge point passwords.</strong> Each charge point declared with <code>auth: basic</code>
+  in its site document has its own password for its OCPP connection. The
+  gateway sets it on the box over OCPP; it is in no file and nobody sees
+  it. <code>cpms chargepoints rekey &lt;key&gt;</code> replaces it.</li>
+<li><strong>Driver session tokens.</strong> A driver who pays by card at the QR code gets
+  a link to their own session (<code>/s/&lt;token&gt;</code>). The token is the only key to
+  that one charge. Drivers hold these; nobody at the organization needs
+  them.</li>
+<li><strong>Instance secrets.</strong> The balancer's own operator key, the key between
+  LeanCPMS and its gateway, the payment provider's keys: these live on the
+  server and are the operator's (<code>deploy/README.md</code>).</li>
+</ul>
+<h3 id="the-actions-journal">The actions journal<a class="headerlink" href="#the-actions-journal" title="Permanent link">&para;</a></h3>
+<p>Every change (adding a member, issuing or revoking a key, applying a
+manifest, approving a <code>cpms login</code>) writes a row to the actions journal:
+who, when, what, and the result. It never stores a secret or an e-mail
+address; it stores the key's prefix. That is what answers "who did this,
+and when" afterwards.</p>
+<hr />
+<h2 id="2-on-leancpms-cloud">2. On LeanCPMS Cloud<a class="headerlink" href="#2-on-leancpms-cloud" title="Permanent link">&para;</a></h2>
+<h3 id="host-names">Host names<a class="headerlink" href="#host-names" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Address</th>
+<th>For whom</th>
+<th>What</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>https://portal.leancpms.com</code></td>
+<td>people</td>
+<td>the portal, the admin pages, and the page where you approve <code>cpms login</code></td>
+</tr>
+<tr>
+<td><code>https://api.leancpms.com</code></td>
+<td>machines</td>
+<td>the JSON API (docs at <code>/api/v1/docs</code>), the command line, OCPI</td>
+</tr>
+<tr>
+<td><code>wss://ocpp.leancpms.com</code></td>
+<td>charge points</td>
+<td>the OCPP connection</td>
+</tr>
+<tr>
+<td>the organization's own domain, e.g. <code>charge.example.com</code>, or <code>acme.leancpms.com</code></td>
+<td>drivers</td>
+<td>the station list, the QR pages and the driver API</td>
+</tr>
+<tr>
+<td><code>https://leancpms.com</code></td>
+<td>everyone</td>
+<td>the website, hosted apart from the instance</td>
+</tr>
+</tbody>
+</table>
+<p>The portal and the admin pages answer only on <code>portal.leancpms.com</code>. Asked
+for on any other of the names, they redirect there, so a driver's domain
+never shows a login page. The API answers on <code>api.leancpms.com</code>; use that
+address with the command line.</p>
+<h3 id="how-someone-becomes-a-member">How someone becomes a member<a class="headerlink" href="#how-someone-becomes-a-member" title="Permanent link">&para;</a></h3>
+<p>There is no page for it. Members are added from the command line, or
+through the API it uses:</p>
+<ol type="1">
+<li>
+<p><strong>The operator adds the organization's first administrator</strong>, with an
+    operator key:</p>
+<div class="highlight"><pre><span></span><code>cpms<span class="w"> </span>members<span class="w"> </span>add<span class="w"> </span>anna@example.com<span class="w"> </span>--org<span class="w"> </span>acme<span class="w"> </span>--role<span class="w"> </span>write
+</code></pre></div>
+</li>
+<li>
+<p><strong>That administrator adds colleagues</strong>, with their own personal
+    <code>write</code> key:</p>
+<div class="highlight"><pre><span></span><code>cpms<span class="w"> </span>members<span class="w"> </span>add<span class="w"> </span>ben@example.com<span class="w"> </span>--org<span class="w"> </span>acme<span class="w">              </span><span class="c1"># read (the default)</span>
+cpms<span class="w"> </span>members<span class="w"> </span>add<span class="w"> </span>carla@example.com<span class="w"> </span>--org<span class="w"> </span>acme<span class="w"> </span>--role<span class="w"> </span>write
+</code></pre></div>
+</li>
+</ol>
+<p>Nothing is e-mailed when a member is added. Tell the person yourself to go
+to <code>https://portal.leancpms.com</code> and log in with that address.</p>
+<p>An organization can manage only its own members. It cannot see or change
+an operator member, and it learns nothing about a person's memberships
+elsewhere.</p>
+<h3 id="logging-in-to-the-portal">Logging in to the portal<a class="headerlink" href="#logging-in-to-the-portal" title="Permanent link">&para;</a></h3>
+<ol type="1">
+<li>Open <code>https://portal.leancpms.com</code>.</li>
+<li>Type your e-mail address. A code is e-mailed to you; type it on the next
+   page. If no mail comes, the address is not a member (or has a typo):
+   ask whoever was to add you.</li>
+<li>With one organization you land on its overview; with several, on a list
+   of them.</li>
+</ol>
+<p>A login lasts 90 days on that browser, or until you log out
+(top right) or your last membership is removed. The portal shows, for each
+organization: an overview with live state, sessions, receipts and the
+monthly settlements. It only reads. Its texts follow the browser's language
+(Swedish or English).</p>
+<p>Because the code goes to your e-mail, <strong>your mailbox is your password</strong>:
+whoever can read your mail can log in as you.</p>
+<h3 id="the-admin-pages">The admin pages<a class="headerlink" href="#the-admin-pages" title="Permanent link">&para;</a></h3>
+<p>An operator member also sees an <strong>Admin</strong> button in the portal, which
+leads to <code>https://portal.leancpms.com/admin/</code>. Opened directly without a
+login, it sends you through the same code login first. Organization members
+get "403 Forbidden" there, whatever their role. The admin pages are
+read-only: changes are made with <code>cpms</code> and an operator key, never in the
+admin.</p>
+<hr />
+<h2 id="3-the-command-line">3. The command line<a class="headerlink" href="#3-the-command-line" title="Permanent link">&para;</a></h2>
+<p><code>cpms</code> is a small program you install on your own computer. It talks to
+<code>api.leancpms.com</code> with your personal key. The examples assume a Unix
+shell (Linux or macOS).</p>
+<h3 id="install">Install<a class="headerlink" href="#install" title="Permanent link">&para;</a></h3>
+<p><code>leancpms-cli</code> is published on PyPI, so it installs without access to the
+source repository. The recommended way is with
+<a href="https://docs.astral.sh/uv/">uv</a>, which also fetches Python 3.14 if your
+computer lacks it:</p>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-LsSf<span class="w"> </span>https://astral.sh/uv/install.sh<span class="w"> </span><span class="p">|</span><span class="w"> </span>sh<span class="w">     </span><span class="c1"># if you do not have uv yet</span>
+uv<span class="w"> </span>tool<span class="w"> </span>install<span class="w"> </span>leancpms-cli
+cpms<span class="w"> </span>--help
+</code></pre></div>
+<ul>
+<li><strong>Upgrade:</strong> <code>uv tool upgrade leancpms-cli</code>. To pin a version:
+  <code>uv tool install leancpms-cli==0.1.4</code>.</li>
+<li><strong>pipx</strong> works too, if Python 3.14 is already installed:
+  <code>pipx install leancpms-cli</code>.</li>
+<li><strong>Other routes, for those with access to the repository</strong> while it is
+  private: the wheel on the GitHub release (<code>gh release download cli-v0.1.4
+  --repo forsslund/leancpms --pattern '*.whl'</code>, then <code>uv tool install
+  ./leancpms_cli-0.1.4-py3-none-any.whl</code>), or straight from git (<code>uv tool
+  install "git+https://github.com/forsslund/leancpms#subdirectory=cli"</code>).
+  Both fail without repository access; PyPI does not.</li>
+<li>Do not install it where the LeanCPMS server is installed: the server
+  already contains <code>cpms</code>.</li>
+</ul>
+<h3 id="log-in-cpms-login">Log in: <code>cpms login</code><a class="headerlink" href="#log-in-cpms-login" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>cpms<span class="w"> </span>login<span class="w"> </span>--url<span class="w"> </span>https://api.leancpms.com
+</code></pre></div>
+<p>This is the same "device login" as <code>gh auth login</code>:</p>
+<ol type="1">
+<li><code>cpms</code> asks the instance for a login and prints a page address and a
+   code, such as <code>KTRW-MZPB</code>. It opens the page in your browser if it can
+   (<code>--no-browser</code> only prints it, for a server over ssh).</li>
+<li>In the browser you land on <code>portal.leancpms.com/portal/cli/</code>. Log in
+   with your e-mail code if you are not already logged in.</li>
+<li>The page shows the code, what asks for the key (<code>cpms on &lt;your
+   computer's name&gt;</code>), when, and from which internet address. <strong>Check that
+   the code is the one in your terminal.</strong> Approve only a login you just
+   started yourself: whoever started it gets a key in your name.</li>
+<li>Choose the organization and what the key may do. A <code>write</code> member sees
+   "may look and act (write)" and "may only look (read)"; a <code>read</code> member
+   only the latter. <code>--scope read</code> on the command line preselects read.</li>
+<li>Approve. The terminal continues by itself and saves the key.</li>
+</ol>
+<p>The code is valid for ten minutes and works once. Ten wrong codes in an
+hour lock the approval page for you for an hour.</p>
+<p>The key is saved in the <strong>config file</strong>, <code>~/.config/cpms/config.toml</code>,
+readable only by you:</p>
+<div class="highlight"><pre><span></span><code><span class="k">[default]</span>
+<span class="n">url</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"https://api.leancpms.com"</span>
+<span class="n">api_key</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"lcp_3f9a1c2e_…"</span>
+</code></pre></div>
+<p>Logging in again replaces the key in that profile; the old one keeps
+working until you revoke it (<code>cpms keys revoke</code>).</p>
+<h3 id="profiles">Profiles<a class="headerlink" href="#profiles" title="Permanent link">&para;</a></h3>
+<p>Each <code>[name]</code> in the config file is a <strong>profile</strong>: an address and a key.
+<code>cpms login</code> writes <code>[default]</code> unless you name another, and leaves the
+other profiles as they are. Pick a profile with <code>--profile</code> or the
+environment variable <code>CPMS_PROFILE</code>:</p>
+<div class="highlight"><pre><span></span><code>cpms<span class="w"> </span>login<span class="w"> </span>--url<span class="w"> </span>https://api.leancpms.com<span class="w"> </span>--profile<span class="w"> </span>acme-read<span class="w"> </span>--scope<span class="w"> </span><span class="nb">read</span>
+cpms<span class="w"> </span>--profile<span class="w"> </span>acme-read<span class="w"> </span>sessions<span class="w"> </span>--since<span class="w"> </span><span class="m">2026</span>-11-01
+<span class="nv">CPMS_PROFILE</span><span class="o">=</span>acme-read<span class="w"> </span>cpms<span class="w"> </span>sessions
+</code></pre></div>
+<p>Use one profile per organization if you are a member of several, since a
+personal key is for one organization.</p>
+<p>Instead of a profile, a script can set <code>CPMS_URL</code> and <code>CPMS_API_KEY</code> in its
+environment. Without <code>--profile</code>, the environment wins over <code>[default]</code>.
+<code>CPMS_CONFIG</code> points at another config file. A command that finds no key
+exits with code 2 and says what to set.</p>
+<h3 id="cpms-whoami-and-cpms-logout"><code>cpms whoami</code> and <code>cpms logout</code><a class="headerlink" href="#cpms-whoami-and-cpms-logout" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>cpms<span class="w"> </span>whoami
+anna@example.com:<span class="w"> </span>write<span class="w"> </span>key<span class="w"> </span>3f9a1c2e<span class="w"> </span><span class="o">(</span>cpms<span class="w"> </span>on<span class="w"> </span>anna-laptop<span class="o">)</span><span class="w"> </span><span class="k">for</span><span class="w"> </span>organization<span class="w"> </span>acme
+
+$<span class="w"> </span>cpms<span class="w"> </span><span class="nb">logout</span>
+revoked<span class="w"> </span>key<span class="w"> </span>3f9a1c2e
+removed<span class="w"> </span>profile<span class="w"> </span><span class="o">[</span>default<span class="o">]</span><span class="w"> </span>from<span class="w"> </span>/home/anna/.config/cpms/config.toml
+</code></pre></div>
+<p><code>whoami</code> says which key is in use: whose, for which organization, <code>read</code> or
+<code>write</code>. <code>logout</code> revokes the key <strong>in use</strong> on the server, then removes
+the profile. It revokes whatever key the profile holds, so never run it on
+a profile that holds an integration's machine key. A key from
+<code>CPMS_API_KEY</code> is revoked but stays in your environment; unset it.</p>
+<h3 id="several-computers">Several computers<a class="headerlink" href="#several-computers" title="Permanent link">&para;</a></h3>
+<p>Run <code>cpms login</code> on each computer. Each gets its own personal key, named
+after the computer, so you can revoke one without touching the others. Do
+not copy the config file between computers: the same key in two places
+cannot be revoked in one of them only.</p>
+<h3 id="when-a-computer-is-lost-or-stolen">When a computer is lost or stolen<a class="headerlink" href="#when-a-computer-is-lost-or-stolen" title="Permanent link">&para;</a></h3>
+<p>The lost computer holds your personal key in <code>~/.config/cpms/config.toml</code>,
+and perhaps a portal login in its browser.</p>
+<ol type="1">
+<li><strong>Secure your e-mail first.</strong> Whoever reads your mail can log in as you.</li>
+<li>
+<p><strong>Revoke the key.</strong> From another computer, log in (<code>cpms login</code>), then
+    find the key named after the lost computer and revoke it:</p>
+<div class="highlight"><pre><span></span><code>cpms<span class="w"> </span>keys<span class="w"> </span>list
+<span class="c1"># prefix    organization  scope  name                  personal (owner)  issued by         created ...</span>
+<span class="c1"># 3f9a1c2e  acme          write  cpms on anna-laptop   anna@example.com  anna@example.com  ...</span>
+cpms<span class="w"> </span>keys<span class="w"> </span>revoke<span class="w"> </span>3f9a1c2e
+</code></pre></div>
+<p>Listing and revoking keys needs a <code>write</code> key. A <code>read</code> member asks a
+colleague with <code>write</code>, or the operator, to do it.</p>
+</li>
+<li>
+<p><strong>Machine keys whose secrets were on that computer</strong> (in another
+    profile, a script, a <code>.env</code> file) must be revoked too: revoking your
+    personal key does not revoke keys issued from it.</p>
+</li>
+<li>
+<p><strong>The portal login in its browser</strong> lasts up to 90 days and cannot be
+    ended from elsewhere by you. The operator can end it by removing your
+    memberships, which switches the account off, and adding you again. That
+    also revokes your personal keys and every key issued from them, so
+    decide first which machine keys must be issued anew. The portal only
+    reads, but it shows sessions and receipts, which hold drivers' personal
+    data.</p>
+</li>
+</ol>
+<h3 id="everyday-commands">Everyday commands<a class="headerlink" href="#everyday-commands" title="Permanent link">&para;</a></h3>
+<p>Every command takes <code>--json</code> for machine-readable output and <code>--profile</code>.
+<code>cpms &lt;command&gt; --help</code> lists the rest.</p>
+<p><strong>Who is a member, and with which role</strong></p>
+<div class="highlight"><pre><span></span><code>cpms<span class="w"> </span>members<span class="w"> </span>list
+cpms<span class="w"> </span>members<span class="w"> </span>add<span class="w"> </span>ben@example.com<span class="w"> </span>--org<span class="w"> </span>acme<span class="w">                 </span><span class="c1"># read</span>
+cpms<span class="w"> </span>members<span class="w"> </span>add<span class="w"> </span>carla@example.com<span class="w"> </span>--org<span class="w"> </span>acme<span class="w"> </span>--role<span class="w"> </span>write
+cpms<span class="w"> </span>members<span class="w"> </span>set-role<span class="w"> </span>ben@example.com<span class="w"> </span>--org<span class="w"> </span>acme<span class="w"> </span>--role<span class="w"> </span>write
+cpms<span class="w"> </span>members<span class="w"> </span>remove<span class="w"> </span>ben@example.com<span class="w"> </span>--org<span class="w"> </span>acme
+</code></pre></div>
+<p><code>--org acme</code> is needed even though your key is already for <code>acme</code>.
+<code>members list</code> shows each member's role, whether the account is active,
+when they were added and by whom.</p>
+<p><strong>Keys</strong></p>
+<div class="highlight"><pre><span></span><code>cpms<span class="w"> </span>keys<span class="w"> </span>list<span class="w">                                   </span><span class="c1"># every key of the organization, revoked ones too</span>
+cpms<span class="w"> </span>keys<span class="w"> </span>issue<span class="w"> </span>--name<span class="w"> </span>dashboard<span class="w"> </span>--scope<span class="w"> </span><span class="nb">read</span><span class="w">    </span><span class="c1"># prints the secret once</span>
+cpms<span class="w"> </span>keys<span class="w"> </span>revoke<span class="w"> </span>7b2d90aa
+</code></pre></div>
+<p><code>keys issue</code> makes a key for your own organization; the default scope is
+<code>write</code>, so say <code>--scope read</code> when looking is enough. The secret is
+printed on its own line on standard output, so it can go straight into a
+secret store: <code>cpms keys issue --name ci --scope read &gt; ci-key.txt</code>.</p>
+<p><strong>Declared state: organization, price list, sites</strong></p>
+<p>These are YAML documents, kept best in a git repository of your own
+(<a href="../cli/#a-repository-of-manifests"><code>cli/README.md</code>, "A repository of manifests"</a>):</p>
+<div class="highlight"><pre><span></span><code>cpms<span class="w"> </span>manifest<span class="w"> </span><span class="nb">export</span><span class="w"> </span>acme<span class="w"> </span>&gt;<span class="w"> </span>all.yaml<span class="w">                  </span><span class="c1"># every document</span>
+cpms<span class="w"> </span>manifest<span class="w"> </span><span class="nb">export</span><span class="w"> </span>acme<span class="w"> </span>--site<span class="w"> </span>main-street<span class="w"> </span>&gt;<span class="w"> </span>sites/main-street.yaml
+cpms<span class="w"> </span>manifest<span class="w"> </span>validate<span class="w"> </span>sites/main-street.yaml<span class="w">         </span><span class="c1"># offline, needs no key</span>
+cpms<span class="w"> </span>manifest<span class="w"> </span>plan<span class="w"> </span>sites/main-street.yaml<span class="w">             </span><span class="c1"># what would change; needs a write key</span>
+cpms<span class="w"> </span>manifest<span class="w"> </span>apply<span class="w"> </span>sites/main-street.yaml<span class="w"> </span>-m<span class="w"> </span><span class="s2">"Fused up to 50 A"</span>
+cpms<span class="w"> </span>manifest<span class="w"> </span><span class="nb">history</span><span class="w"> </span>acme<span class="w"> </span>--site<span class="w"> </span>main-street
+cpms<span class="w"> </span>manifest<span class="w"> </span>diff<span class="w"> </span>acme<span class="w"> </span>--site<span class="w"> </span>main-street<span class="w"> </span>v3
+</code></pre></div>
+<p><code>apply</code> shows the plan and asks before it applies; <code>-m</code> (the reason, stored
+with the version) is required. Removing anything needs <code>--prune</code>. An
+organization's key applies the price list and site documents; the
+organization document is changed by the operator.</p>
+<p><strong>Live state, sessions, the monthly settlements</strong></p>
+<div class="highlight"><pre><span></span><code>cpms<span class="w">                                          </span><span class="c1"># live state: sites, outlets, current per phase</span>
+cpms<span class="w"> </span>sessions<span class="w"> </span>--since<span class="w"> </span><span class="m">2026</span>-11-01<span class="w"> </span>--status<span class="w"> </span>ended
+cpms<span class="w"> </span>sessions<span class="w"> </span>--since<span class="w"> </span><span class="m">2026</span>-11-01<span class="w"> </span>--csv<span class="w"> </span>&gt;<span class="w"> </span>november.csv
+cpms<span class="w"> </span>session<span class="w"> </span>SIM-0001/42<span class="w">                      </span><span class="c1"># one session: &lt;charge point&gt;/&lt;transaction&gt;</span>
+cpms<span class="w"> </span>session<span class="w"> </span>SIM-0001/42<span class="w"> </span>stop<span class="w">                 </span><span class="c1"># acts at once, no confirmation</span>
+cpms<span class="w"> </span>report<span class="w"> </span>settlements<span class="w"> </span>--month<span class="w"> </span><span class="m">2026</span>-10
+</code></pre></div>
+<h3 id="scripts-ci-and-agents">Scripts, CI and agents<a class="headerlink" href="#scripts-ci-and-agents" title="Permanent link">&para;</a></h3>
+<p>A script or an agent uses a machine key in <code>CPMS_URL</code> and <code>CPMS_API_KEY</code>,
+never on the command line, where it ends up in shell history and process
+lists. Exit codes: 0 ok, 1 the server said no or could not be reached, 2
+usage or configuration. <code>manifest apply</code> never asks without a terminal: it
+prints the plan and exits 2 unless given <code>--yes</code>. More in
+<a href="../cli/#for-agents"><code>cli/README.md</code>, "For agents"</a>.</p>
+<hr />
+<h2 id="4-common-tasks">4. Common tasks<a class="headerlink" href="#4-common-tasks" title="Permanent link">&para;</a></h2>
+<h3 id="add-a-colleague">Add a colleague<a class="headerlink" href="#add-a-colleague" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>cpms<span class="w"> </span>members<span class="w"> </span>add<span class="w"> </span>ben@example.com<span class="w"> </span>--org<span class="w"> </span>acme<span class="w">      </span><span class="c1"># or --role write to let them act</span>
+</code></pre></div>
+<p>Then tell Ben to log in at <code>https://portal.leancpms.com</code> with that address,
+and, if he will use the command line, to install <code>cpms</code> and run
+<code>cpms login --url https://api.leancpms.com</code>.</p>
+<h3 id="give-or-lower-a-role">Give or lower a role<a class="headerlink" href="#give-or-lower-a-role" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>cpms<span class="w"> </span>members<span class="w"> </span>set-role<span class="w"> </span>ben@example.com<span class="w"> </span>--org<span class="w"> </span>acme<span class="w"> </span>--role<span class="w"> </span>write
+cpms<span class="w"> </span>members<span class="w"> </span>set-role<span class="w"> </span>ben@example.com<span class="w"> </span>--org<span class="w"> </span>acme<span class="w"> </span>--role<span class="w"> </span><span class="nb">read</span>
+</code></pre></div>
+<p>Raised to <code>write</code>, Ben runs <code>cpms login</code> again to get a <code>write</code> key; his
+<code>read</code> key stays as it was. Lowered to <code>read</code>, his <code>write</code> keys are revoked
+at once, and so is every key issued from them; the output lists their
+prefixes. Look at <code>cpms keys list</code> first if he made keys for integrations.</p>
+<h3 id="remove-someone">Remove someone<a class="headerlink" href="#remove-someone" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>cpms<span class="w"> </span>keys<span class="w"> </span>list<span class="w">                                   </span><span class="c1"># first: which keys did they issue?</span>
+cpms<span class="w"> </span>members<span class="w"> </span>list<span class="w">                                </span><span class="c1"># and whom did they add?</span>
+cpms<span class="w"> </span>members<span class="w"> </span>remove<span class="w"> </span>ben@example.com<span class="w"> </span>--org<span class="w"> </span>acme
+</code></pre></div>
+<p>This revokes Ben's personal keys for <code>acme</code> and every key issued from
+them, and lists the revoked prefixes. If it was his last membership his
+account is switched off and his portal login ends. The members he added
+stay: decide about them separately. Any integration running on a key Ben
+issued stops now; give it a new key first (next task).</p>
+<h3 id="a-key-for-an-integration-that-must-outlive-a-person">A key for an integration that must outlive a person<a class="headerlink" href="#a-key-for-an-integration-that-must-outlive-a-person" title="Permanent link">&para;</a></h3>
+<p>A dashboard, an accounting export, an agent: anything that should keep
+working when the person who set it up leaves.</p>
+<p>A key issued with your personal key dies with your membership. Ask the
+operator instead, saying what it is for and whether it needs <code>write</code>.</p>
+<p>The operator must issue it from a key with no person anywhere in its
+chain: a key made on the server with <code>manage.py issue_key</code>, or a key
+issued from such a key. A key the operator issues with their own personal
+operator key would in turn die with <em>their</em> operator membership. With such
+a person-free operator key in its environment, the operator runs:</p>
+<div class="highlight"><pre><span></span><code>cpms<span class="w"> </span>keys<span class="w"> </span>issue<span class="w"> </span>--org<span class="w"> </span>acme<span class="w"> </span>--name<span class="w"> </span>accounting-export<span class="w"> </span>--scope<span class="w"> </span><span class="nb">read</span>
+</code></pre></div>
+<p>It appears in your <code>cpms keys list</code> with "operator" as its issuer (or
+nothing, if it was made directly on the server). Your organization can
+still revoke it.</p>
+<p>If the integration may die with you (a script of your own, a test), issue
+it yourself:</p>
+<div class="highlight"><pre><span></span><code>cpms<span class="w"> </span>keys<span class="w"> </span>issue<span class="w"> </span>--name<span class="w"> </span>my-script<span class="w"> </span>--scope<span class="w"> </span><span class="nb">read</span>
+</code></pre></div>
+<h3 id="revoke-a-key">Revoke a key<a class="headerlink" href="#revoke-a-key" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>cpms<span class="w"> </span>keys<span class="w"> </span>list<span class="w">               </span><span class="c1"># find its prefix</span>
+cpms<span class="w"> </span>keys<span class="w"> </span>revoke<span class="w"> </span>7b2d90aa
+</code></pre></div>
+<p>It stops working at once. Only that key is revoked: keys issued from it
+keep working until revoked themselves, or until their maker's membership
+ends. An organization's <code>write</code> key may revoke any key of the
+organization: a colleague's personal key, a machine key, or one the
+operator issued for it. To revoke the key you are using yourself, run
+<code>cpms logout</code>.</p>
+<hr />
+<h2 id="5-running-your-own-instance">5. Running your own instance<a class="headerlink" href="#5-running-your-own-instance" title="Permanent link">&para;</a></h2>
+<p>The model is the same; only the names and the first step differ.</p>
+<ul>
+<li>The host names come from the server's settings: <code>PORTAL_URL</code> (where the
+    portal and the admin answer; other hosts redirect there),
+    <code>PUBLIC_BASE_URL</code> (the drivers' host in receipt links), each
+    organization's <code>driver_hosts</code> in its organization document, and
+    <code>DJANGO_ALLOWED_HOSTS</code> for every name. One name for everything works
+    too: leave <code>PORTAL_URL</code> empty and every host serves the portal.</li>
+<li>
+<p><strong>The first operator.</strong> Nobody can log in until someone is a member, so
+    the first key comes from the server:</p>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>leancpms-manage<span class="w"> </span>issue_key<span class="w"> </span>--operator<span class="w"> </span>--name<span class="w"> </span>bootstrap<span class="w">   </span><span class="c1"># prints an operator key once</span>
+<span class="nv">CPMS_URL</span><span class="o">=</span>https://cpms.example.com<span class="w"> </span><span class="nv">CPMS_API_KEY</span><span class="o">=</span>lcp_…<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>cpms<span class="w"> </span>members<span class="w"> </span>add<span class="w"> </span>you@example.com<span class="w"> </span>--operator<span class="w"> </span>--role<span class="w"> </span>write
+cpms<span class="w"> </span>login<span class="w"> </span>--url<span class="w"> </span>https://cpms.example.com<span class="w">                    </span><span class="c1"># choose "Operator: every organization"</span>
+</code></pre></div>
+<p>Revoke the bootstrap key once you have your personal one, or keep it as
+the person-free key that issues integration keys.</p>
+</li>
+<li>
+<p>Login codes are e-mailed through the SMTP server in the settings; in
+    development without one, the mail is printed in the server's log
+    (<code>dev/README.md</code>).</p>
+</li>
+</ul>
+<hr />
+<p><em>In the code:</em> people and roles <code>cpms/portal/models.py</code>,
+<code>cpms/portal/access.py</code>; the admin <code>cpms/portal/admin_site.py</code>; member
+actions <code>cpms/actions/members.py</code>; key actions <code>cpms/actions/keys.py</code> and
+<code>cpms/core/keys.py</code>; <code>cpms login</code> <code>cpms/actions/login.py</code>,
+<code>cpms/api/login.py</code>, <code>cpms/portal/cli.py</code>, <code>cpms/cli/login.py</code>; scopes on
+every request <code>cpms/api/auth.py</code>.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-circle-arrow-up" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m16 12-4-4-4 4M12 16V8"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="./.." class="md-footer__link md-footer__link--prev" aria-label="Previous: Home">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-arrow-left" viewBox="0 0 24 24"><path d="m12 19-7-7 7-7M19 12H5"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Home
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../cli/" class="md-footer__link md-footer__link--next" aria-label="Next: The command line">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                The command line
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-arrow-right" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Forsslund Systems AB · AGPL-3.0
+    </div>
+  
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog" role="status" aria-atomic="true">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      
+      
+        
+        
+      <script id="__config" type="application/json">{"annotate":null,"base":"..","features":["navigation.tabs","navigation.sections","navigation.top","navigation.footer","navigation.indexes","toc.follow","search.highlight","content.code.copy"],"redirect":null,"search":"../assets/javascripts/workers/search.719e0d91.min.js","tags":null,"translations":{"clipboard.copied":"Copied to clipboard","clipboard.copy":"Copy to clipboard","clipboard.error":"Could not copy to clipboard","search.result.more.one":"1 more on this page","search.result.more.other":"# more on this page","search.result.none":"No matching documents","search.result.one":"1 matching document","search.result.other":"# matching documents","search.result.placeholder":"Type to start searching","search.result.term.missing":"Missing","select.version":"Select version"},"version":null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.3cb411a8.min.js"></script>
+      
+    
+  </body>
+</html>
