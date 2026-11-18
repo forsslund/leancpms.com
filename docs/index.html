@@ -6,7 +6,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="Documentation for LeanCPMS, the open-source charge point management system: users and access, the cpms command line and the driver API.">
+        <meta name="description" content="Documentation for LeanCPMS, the open-source charge point management system: users and access, the cpms command line, operating and self-hosting an instance, and the driver API.">
       
       
       
@@ -230,6 +230,34 @@
   
   
   
+    
+      
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      <li class="md-tabs__item">
+        <a href="./operators/" class="md-tabs__link">
+          
+  
+  Operators and self-hosting
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
     <li class="md-tabs__item">
       <a href="./driver/" class="md-tabs__link">
         
@@ -344,6 +372,17 @@
     <span class="md-ellipsis">
       <span class="md-typeset">
         Guides
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#operators-and-self-hosting" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Operators and self-hosting
       </span>
     </span>
   </a>
@@ -516,6 +555,125 @@
   
   
   
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Operators and self-hosting
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        
+          <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_3">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  Operators and self-hosting
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="./operators/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  The operator
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="./self-hosting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Running your own instance
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
     <li class="md-nav__item">
       <a href="./driver/" class="md-nav__link">
         
@@ -588,6 +746,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#operators-and-self-hosting" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Operators and self-hosting
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#driver-api" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -639,21 +808,31 @@
 
 <h1 id="leancpms-documentation">LeanCPMS documentation<a class="headerlink" href="#leancpms-documentation" title="Permanent link">&para;</a></h1>
 <p>LeanCPMS is an open-source charge point management system (CPMS) for EV
-charging: small, complete, and debuggable. These pages are for the people
-who use an instance of it, such as LeanCPMS Cloud, and for developers who
-build on it. The product itself is described at
+charging: small, complete, and debuggable. The guides are written for
+people who use LeanCPMS Cloud, the hosted service, starting with an
+organization's administrator; those who run an instance, LeanCPMS Cloud's
+or their own, have a section of their own, and developers who build on it
+have the driver API. The product itself is described at
 <a href="https://leancpms.com/">leancpms.com</a>.</p>
 <p>LeanCPMS is pre-release. These pages describe the code as it is; where
 something is not built yet, they say so.</p>
 <h2 id="guides">Guides<a class="headerlink" href="#guides" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="users-and-access/">Users and access</a>: people, organizations,
-  roles and API keys, how to log in to the portal and with <code>cpms login</code>,
-  and the common tasks of an organization's administrator.</li>
+<li><a href="users-and-access/">Users and access</a>: logging in to the
+  portal and with <code>cpms login</code>, the two roles, adding and removing
+  colleagues, several computers and a lost one, and keys for integrations.</li>
 <li><a href="cli/">The command line</a>: installing <code>cpms</code>
-  (<code>uv tool install leancpms-cli</code>), configuring it, managing an
-  organization's YAML documents from a git repository, and using it from
-  scripts and agents.</li>
+  (<code>uv tool install leancpms-cli</code>), the everyday commands, and changing
+  your price list and sites by exporting, editing and applying their YAML
+  documents.</li>
+</ul>
+<h2 id="operators-and-self-hosting">Operators and self-hosting<a class="headerlink" href="#operators-and-self-hosting" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="operators/">The operator</a>: the operator and its membership,
+  the admin pages, operator keys and keys with no person behind them, the
+  full rules for revoking keys, and the other credentials.</li>
+<li><a href="self-hosting/">Running your own instance</a>: host names, the
+  first operator, and pointing <code>cpms</code> at your instance with <code>--url</code>.</li>
 </ul>
 <h2 id="driver-api">Driver API<a class="headerlink" href="#driver-api" title="Permanent link">&para;</a></h2>
 <ul>
