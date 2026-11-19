@@ -944,8 +944,20 @@ cpms<span class="w"> </span>sessions<span class="w"> </span>--since<span class="
 cpms<span class="w"> </span>sessions<span class="w"> </span>--since<span class="w"> </span><span class="m">2026</span>-11-01<span class="w"> </span>--csv<span class="w"> </span>&gt;<span class="w"> </span>november.csv
 cpms<span class="w"> </span>session<span class="w"> </span>SIM-0001/42<span class="w">                  </span><span class="c1"># one session: &lt;charge point&gt;/&lt;transaction&gt;</span>
 cpms<span class="w"> </span>session<span class="w"> </span>SIM-0001/42<span class="w"> </span>stop<span class="w">             </span><span class="c1"># acts at once, no confirmation</span>
+cpms<span class="w"> </span>session<span class="w"> </span>SIM-0001/42<span class="w"> </span>quarters<span class="w">         </span><span class="c1"># its energy per UTC quarter-hour</span>
+cpms<span class="w"> </span>quarters<span class="w"> </span>--since<span class="w"> </span><span class="m">2026</span>-11-01<span class="w"> </span>--until<span class="w"> </span><span class="m">2026</span>-12-01<span class="w"> </span>--csv<span class="w"> </span>&gt;<span class="w"> </span>november-quarters.csv
 cpms<span class="w"> </span>report<span class="w"> </span>settlements<span class="w"> </span>--month<span class="w"> </span><span class="m">2026</span>-10<span class="w">   </span><span class="c1"># the month's settlements per site, with bookkeeping proposals</span>
 </code></pre></div>
+<p><code>cpms quarters</code> gives one row per session and UTC clock quarter-hour
+(:00, :15, :30, :45): the Wh delivered in it, to set against quarter-hour
+spot prices. <code>--site</code> narrows, <code>--json</code> gives the same rows as JSON. The
+first and last quarter of a session are usually shorter than 15 minutes
+(<code>seconds</code>); <code>estimated</code> marks a quarter computed across a gap in the meter
+samples, and <code>final</code> is <code>False</code> (the table says <code>open</code>) for the quarter a
+running session is in, which will still grow. <code>phases</code> is how many phases
+carried charging current in the quarter (the most at once, at least 1 A,
+as the box measured it; empty when the box reported no currents in it). A session's quarters sum to
+exactly its <code>wh</code>. Energy only: there are no prices in it.</p>
 <p><strong>Who is a member, and with which role</strong></p>
 <div class="highlight"><pre><span></span><code>cpms<span class="w"> </span>members<span class="w"> </span>list
 cpms<span class="w"> </span>members<span class="w"> </span>add<span class="w"> </span>ben@example.com<span class="w"> </span>--org<span class="w"> </span>acme<span class="w">                 </span><span class="c1"># read</span>
